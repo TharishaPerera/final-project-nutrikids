@@ -1,4 +1,4 @@
-import { BackButton } from "@/components/common/back-button";
+import { BackButton } from "@/components/navigation/back-button";
 import { UserSignupForm } from "@/components/form/auth/user-signup-form";
 
 const RegisterPage = () => {
