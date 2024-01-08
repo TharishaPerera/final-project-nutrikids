@@ -9,7 +9,7 @@ interface BackButtonProps {
     topLeft?: boolean
 }
 
-const BackButton: React.FC<BackButtonProps> = ({ href, topLeft }) => {
+export const BackButton: React.FC<BackButtonProps> = ({ href, topLeft }) => {
   return (
     <>
       <Link
@@ -27,5 +27,3 @@ const BackButton: React.FC<BackButtonProps> = ({ href, topLeft }) => {
     </>
   );
 };
-
-export default BackButton;

@@ -6,7 +6,7 @@ export const pricingPlans = {
       price: "0 LKR",
       features: [
         "NutriKid parents community",
-        "View nutritionists",
+        "View pediatricians",
         "View child specialists",
       ],
     },
@@ -16,7 +16,7 @@ export const pricingPlans = {
       price: "1000.00 LKR",
       features: [
         "Everything in free plan",
-        "Chat with nutritionists",
+        "Chat with pediatricians",
         "Chat with child specialists",
       ],
     },
