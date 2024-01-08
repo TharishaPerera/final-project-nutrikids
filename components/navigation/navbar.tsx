@@ -10,7 +10,7 @@ import { UserMenu } from "@/components/common/user-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/theme-toggler";
 import { ApplicationName, TopNavLinks, showDashboardBtnLinks } from "@/config/navlinks.config";
-import { MobileMenu } from "@/components/common/mobile-menu";
+import { MobileMenu } from "@/components/navigation/mobile-menu";
 import { X } from "lucide-react";
 
 export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
