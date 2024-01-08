@@ -34,10 +34,9 @@ export const UserLoginForm = () => {
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email already in use with different provider!"
       : "";
+  if (urlError !== "") toast.error(urlError);
 
   const [showTwoFactor, setShowTwoFactor] = useState(false);
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isPending, startTransition] = React.useTransition();
 
@@ -50,20 +49,15 @@ export const UserLoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
-
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
-            setError(data.error);
             toast.error(data.error);
           }
           if (data?.success) {
             form.reset();
-            setSuccess(data.success);
             toast.success(data.success);
           }
           if (data?.twoFactor) {
@@ -71,7 +65,6 @@ export const UserLoginForm = () => {
           }
         })
         .catch(() => {
-          setError("Something went wrong!")
           toast.error("Something went wrong! Please try again.")
         });
     });
@@ -96,7 +89,6 @@ export const UserLoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Two Factor Code</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -140,6 +132,7 @@ export const UserLoginForm = () => {
                           disabled={isPending}
                         />
                       </FormControl>
+                      <FormMessage />
                       <Button
                         variant="link"
                         size="sm"
@@ -148,7 +141,6 @@ export const UserLoginForm = () => {
                       >
                         <Link href="/auth/reset">Forgot password?</Link>
                       </Button>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
