@@ -33,8 +33,11 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { register } from "@/actions/auth/register";
 import { useSearchParams } from "next/navigation";
 import { UserRole } from "@prisma/client";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 
 export const UserSignupForm = () => {
+  const { theme } = useTheme();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
@@ -111,7 +114,23 @@ export const UserSignupForm = () => {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <Feather className="mx-auto h-6 w-6" />
+        {theme === "light" ? (
+          <Image
+            className="mx-auto w-auto h-auto"
+            src="/assets/feet-black.png"
+            width={30}
+            height={30}
+            alt="logo"
+          />
+        ) : (
+          <Image
+            className="mx-auto w-auto h-auto"
+            src="/assets/feet-white.png"
+            width={30}
+            height={30}
+            alt="logo"
+          />
+        )}
         <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
         <p className="text-sm text-muted-foreground">
           Enter your email, password and password confirmation to create an
