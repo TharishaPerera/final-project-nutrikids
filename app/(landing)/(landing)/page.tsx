@@ -4,10 +4,22 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { ApplicationName } from "@/config/navlinks.config";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const HomePage = () => {
+  const { theme } = useTheme();
   return (
     <div className="py-20 md:py-40">
+      <div className="">
+        {
+          theme === 'light' ? (
+            <Image className="w-full h-full hidden md:block" src="/assets/bg-black.png" layout="fill" objectFit="cover" alt="logo" />
+          ) : (
+            <Image className="w-full h-full hidden md:block" src="/assets/bg-white.png" layout="fill" objectFit="cover" alt="logo" />
+          )
+        }
+      </div>
       <div className="">
         <div className=" block space-y-6 text-center">
           <div>

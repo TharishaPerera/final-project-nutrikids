@@ -26,8 +26,11 @@ import { login } from "@/actions/auth/login";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export const UserLoginForm = () => {
+  const { theme } = useTheme();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
@@ -73,7 +76,13 @@ export const UserLoginForm = () => {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <Feather className="mx-auto h-6 w-6" />
+        {
+          theme === 'light' ? (
+            <Image className="mx-auto w-auto h-auto" src="/assets/feet-black.png" width={30} height={30} alt="logo" />
+          ) : (
+            <Image className="mx-auto w-auto h-auto" src="/assets/feet-white.png" width={30} height={30} alt="logo" />
+          )
+        }
         <h1 className="text-2xl font-semibold tracking-tight">Welcome</h1>
         <p className="text-sm text-muted-foreground">
           Enter your email and password to sign in to your account
