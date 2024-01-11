@@ -14,9 +14,9 @@ const HomePage = () => {
       <div className="">
         {
           theme === 'light' ? (
-            <Image className="-z-10 w-full h-full hidden md:block" src="/assets/bg-black.png" layout="fill" objectFit="cover" alt="logo" />
+            <Image className="-z-10 w-full h-full hidden md:block" src="/assets/bg-black-sm.png" layout="fill" objectFit="cover" alt="logo" />
           ) : (
-            <Image className="-z-10 w-full h-full hidden md:block" src="/assets/bg-white.png" layout="fill" objectFit="cover" alt="logo" />
+            <Image className="-z-10 w-full h-full hidden md:block" src="/assets/bg-white-sm.png" layout="fill" objectFit="cover" alt="logo" />
           )
         }
       </div>
