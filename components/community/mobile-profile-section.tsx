@@ -1,5 +1,5 @@
-import FloatingMenuButton from "../navigation/floating-menu";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import FloatingMenuButton from "@/components/navigation/floating-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export const MobileProfileSection = () => {
   return (
