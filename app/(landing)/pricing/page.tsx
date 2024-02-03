@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PricingCard } from "@/components/common/pricing-card";
+import { PricingCard } from "@/components/pricing-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { pricingPlans } from "@/config/pricing.config";
 import { ApplicationName } from "@/config/navlinks.config";
