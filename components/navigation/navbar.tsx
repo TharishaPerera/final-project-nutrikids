@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { UserMenu } from "@/components/common/user-menu";
+import { UserMenu } from "@/components/user-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/theme-toggler";
 import { ApplicationName, TopNavLinks, showDashboardBtnLinks } from "@/config/navlinks.config";
