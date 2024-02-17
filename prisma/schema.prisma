@@ -11,14 +11,6 @@ datasource db {
 }
 
 // ENUMS
-enum UserRole {
-  USER
-  ASSISTANT
-  CONSULTANT
-  COMPANY_ADMIN
-  SUPER_ADMIN
-}
-
 enum PostStatus {
   NEW
   APPROVED
@@ -62,7 +54,7 @@ model User {
   image                 String?
   password              String?
   telephone             String?
-  role                  UserRole               @default(USER)
+  role                  Int                    @default(10001)
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
@@ -80,6 +72,15 @@ model User {
   updatedAt             DateTime               @updatedAt
 
   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+  userRole     UserRole      @relation(fields: [role], references: [id])
+}
+
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User[]
 }
 
 model Account {
