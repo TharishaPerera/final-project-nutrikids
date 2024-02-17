@@ -55,12 +55,12 @@ export const UserMenu = () => {
                 <span>Profile</span>
               </DropdownMenuItem>
             </Link>
-            <Link href="/profile">
+            {/* <Link href="/settings">
               <DropdownMenuItem>
                 <Settings className="w-4 h-4 mr-2" />
                 <span>Settings</span>
               </DropdownMenuItem>
-            </Link>
+            </Link> */}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
             <DropdownMenuItem>

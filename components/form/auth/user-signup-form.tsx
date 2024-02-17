@@ -67,8 +67,8 @@ export const UserSignupForm = () => {
     setIsLoading(true);
 
     selectValue === "parent"
-      ? (values.userType = UserRole.USER)
-      : (values.userType = UserRole.CONSULTANT);
+      ? (values.userType = "parent")
+      : (values.userType = "consultant");
 
     const {
       name,

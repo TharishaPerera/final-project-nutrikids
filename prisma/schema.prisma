@@ -10,14 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  USER
-  ASSISTANT
-  CONSULTANT
-  COMPANY_ADMIN
-  SUPER_ADMIN
+// ENUMS
+enum PostStatus {
+  NEW
+  APPROVED
+  REJECTED
+  EDITED
+  DELETED
 }
 
+enum CommentStatus {
+  ACTIVE
+  DEACTIVATED
+  EDITED
+  DELETED
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  ONGOING
+  COMPLETED
+  CANCELED
+  RESCHEDULED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  CHEQUE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+}
+
+// MODELS
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
@@ -26,25 +54,34 @@ model User {
   image                 String?
   password              String?
   telephone             String?
-  role                  UserRole               @default(USER)
+  role                  Int                    @default(10001)
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  accessLog             AccessLog[]
+  child                 Child[]
+  isPediatrician        Pediatrician?
+  isAssistant           Assistant?
+  posts                 Post[]
+  savedPosts            SavedPost[]
+  comments              Comment[]
+  appointment           Appointment[]
+  payment               Payment[]
+  subscriptionId        String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
 
-  // TODO: UserRole table
-  // role          UserRole @relation(fields: [roleId], references: [id])
-  // roleId        Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id])
+  userRole     UserRole      @relation(fields: [role], references: [id])
 }
 
-// TODO: UserRole table
-// model UserRole {
-//   id   Int    @id @default(autoincrement())
-//   role String
-//   User User[]
-// }
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User[]
+}
 
 model Account {
   id                String  @id @default(cuid())
@@ -93,10 +130,162 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
+  id     String @id @default(cuid())
+  userId String @unique
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AccessLog {
+  id        Int      @id @default(autoincrement())
+  activity  String
+  ipAddress Int
+  timestamp DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Child {
+  id           String         @id @default(cuid())
+  parentId     String
+  name         String
+  dateOfBirth  DateTime
+  gender       String
+  healthRecord HealthRecord[]
+  appointment  Appointment[]
+
+  user User @relation(fields: [parentId], references: [id], onDelete: Cascade)
+}
+
+model HealthRecord {
+  id              String   @id @default(cuid())
+  childId         String
+  documents       String?
+  additionalNotes String?
+  createdAt       DateTime @default(now())
+
+  child Child @relation(fields: [childId], references: [id], onDelete: Cascade)
+}
+
+model Pediatrician {
+  pediatricianId   String        @id @default(cuid())
+  userId           String        @unique
+  qualifications   String?
+  speacializations String?
+  description      String
+  availability     Availabilty[]
+  assistant        Assistant[]
+  appointment      Appointment[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Availabilty {
+  id             Int    @id @default(autoincrement())
+  pediatricianId String
+  startTime      String
+  endTime        String
+  location       String
+  dateOfWeek     String
+
+  pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId], onDelete: Cascade)
+}
+
+model Assistant {
+  assistantId    String  @id @default(cuid())
+  userId         String  @unique
+  pediatricianId String
+  qualifications String?
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId], onDelete: Cascade)
+}
+
+model Post {
+  id          String      @id @default(cuid())
+  userId      String
+  media       String?
+  content     String?
+  isHelpfull  Int         @default(0)
+  notHelpfull Int         @default(0)
+  status      PostStatus  @default(NEW)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  savedPost   SavedPost[]
+
+  user    User      @relation(fields: [userId], references: [id])
+  Comment Comment[]
+}
+
+model SavedPost {
+  id     Int    @id @default(autoincrement())
   userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId String
 
-  @@unique([userId])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id       Int           @id @default(autoincrement())
+  userId   String
+  postId   String
+  parent   Int?
+  status   CommentStatus @default(ACTIVE)
+  content  String
+  validity Boolean       @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  pediatricianId  String
+  childId         String
+  parentId        String
+  appointmentDate DateTime
+  timeslot        String
+  additionalNotes String?
+  status          AppointmentStatus @default(SCHEDULED)
+  payment         Payment?
+
+  pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId])
+  child        Child        @relation(fields: [childId], references: [id])
+  parent       User         @relation(fields: [parentId], references: [id])
+}
+
+model Payment {
+  id                 String        @id @default(cuid())
+  appointmentId      String        @unique
+  userId             String
+  method             PaymentMethod @default(CASH)
+  amount             Decimal       @default(0.0)
+  transactionDetails String?
+  timestamp          DateTime      @default(now())
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  startDate DateTime
+  endDate   DateTime
+  status    SubscriptionStatus @default(ACTIVE)
+  planId    String             @unique
+  user      User[]
+
+  subscriptionPlan SubscriptionPlan @relation(fields: [planId], references: [id])
+}
+
+model SubscriptionPlan {
+  id          String  @id @default(cuid())
+  planName    String
+  description String
+  price       Decimal @default(0.0)
+  features    String
+  duration    String
+
+  subscription Subscription?
 }
