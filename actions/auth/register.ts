@@ -35,7 +35,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             name: name,
             email: email,
             password: hashedPassword,
-            role: userType as UserRole
+            role: userType == "consultant" ? 10003 : 10001
         }
     })
 
