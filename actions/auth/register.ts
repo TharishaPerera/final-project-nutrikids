@@ -30,7 +30,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Email already in use!" }
     }
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             name: name,
             email: email,
@@ -38,6 +38,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             role: userType == "consultant" ? 10003 : 10001
         }
     })
+
+    if (userType == "consultant") {
+        await prisma.pediatrician.create({
+            data: {
+                userId: user.id
+            }
+        })
+    }
 
     const verificationToken = await generateVerificationToken(email)
 

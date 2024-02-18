@@ -172,7 +172,7 @@ model Pediatrician {
   userId           String        @unique
   qualifications   String?
   speacializations String?
-  description      String
+  description      String?
   availability     Availabilty[]
   assistant        Assistant[]
   appointment      Appointment[]

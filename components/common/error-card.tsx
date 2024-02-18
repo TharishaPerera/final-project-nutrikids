@@ -10,7 +10,7 @@ interface ErrorCardProps {
     url?: string
 }
 
-export const ErrorCard: React.FC<ErrorCardProps> = ({ title = "Something went wrong!", description = "Sorry about that! Please visit our homepage to get where you need togo.", url = "/" }) => {
+export const ErrorCard: React.FC<ErrorCardProps> = ({ title = "Something went wrong!", description = "Sorry about that! Please visit our homepage to get where you need to go.", url = "/" }) => {
   return (
     <div className=" block space-y-6 text-center">
       <div>
