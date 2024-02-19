@@ -1,5 +1,6 @@
 import FloatingMenuButton from "@/components/navigation/floating-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ProfileSection } from "@/components/community/profile-section";
 
 export const MobileProfileSection = () => {
   return (
@@ -11,7 +12,7 @@ export const MobileProfileSection = () => {
         <SheetContent side="left">
           <div className="py-6 space-y-3">
             {/* TODO: Add mobile profile section */}
-            Mobile Profile Section
+            <ProfileSection />
           </div>
         </SheetContent>
       </Sheet>
