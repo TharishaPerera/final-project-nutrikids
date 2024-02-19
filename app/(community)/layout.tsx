@@ -17,17 +17,13 @@ const CommunityLayout: React.FC<CommunityLayoutProps> = ({ children }) => {
           <Navbar />
         </div>
       </header>
-      <div className="grid flex-1 px-6 md:px-16 gap-6 md:grid-cols-[300px_1fr_300px]">
-        <aside className="hidden w-[300px] flex-col md:flex border-r pr-6">
+      <div className="grid flex-1 px-6 md:px-16 lg:px-32 xl:px-80 gap-6 xl:grid-cols-[300px_1fr]">
+        <aside className="hidden w-[300px] flex-col xl:flex pr-6">
           <ProfileSection />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
           {children}
         </main>
-        <aside className="hidden w-[300px] flex-col md:flex border-l pl-6">
-          {/* TODO: */}
-          Saved Posts Section
-        </aside>
       </div>
       <MobileProfileSection />
       <Footer />

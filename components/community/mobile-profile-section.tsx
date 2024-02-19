@@ -6,7 +6,7 @@ export const MobileProfileSection = () => {
     <div>
       <Sheet>
         <SheetTrigger>
-          <FloatingMenuButton />
+          <FloatingMenuButton screen="xl" />
         </SheetTrigger>
         <SheetContent side="left">
           <div className="py-6 space-y-3">
