@@ -12,7 +12,6 @@ import { LoginSchema } from "@/schemas/auth-schemas";
 import { AuthError } from "next-auth";
 import * as z from "zod";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
-import { error } from "console";
 import prisma from "@/lib/prisma";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
