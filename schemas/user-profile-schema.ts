@@ -6,7 +6,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 /**
  * User profile general form schema
  */
-export const userProfileSchema = z.object({
+export const UserProfileSchema = z.object({
   name: z.string().min(1, {
     message: "Name field is required!",
   }),
@@ -17,4 +17,22 @@ export const userProfileSchema = z.object({
   }),
   image: z.any().optional(),
   twoFactorEnabled: z.boolean(),
+});
+
+/**
+ * User profile password update form schema
+ */
+export const PasswordUpdateSchema = z.object({
+  currentPassword: z.string().min(1, {
+    message: "Current password is required!",
+  }),
+  newPassword:z.string().min(8, {
+    message: "New password should be minimum 8 characters!",
+  }),
+  confirmPassword: z.string().min(8, {
+    message: "Confirm password field is required!",
+  })
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Passwords should be identical",
+  path: ["confirmPassword"],
 });
