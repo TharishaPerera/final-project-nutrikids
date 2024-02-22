@@ -30,12 +30,14 @@ export const PasswordForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof PasswordUpdateSchema>) => {
-    console.log("OnSubmit: ", values);
     startTransition(() => {
       updatePassword(values)
         .then((data) => {
           data?.error && toast.error(data.error);
-          data.success && toast.success(data.success);
+          if (data.success) {
+            toast.success(data.success);
+            form.reset()
+          }
         })
         .catch((error) => {
           console.error("An error occurred: ", error);

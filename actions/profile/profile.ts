@@ -88,5 +88,5 @@ export const updatePassword = async (
       password: hashedPassword,
     },
   });
-  return { success: "success message" };
+  return { success: "Password updated successfully!" };
 };
