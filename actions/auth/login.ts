@@ -2,7 +2,7 @@
 
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/data/user";
-import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
+import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/smtp";
 import {
   generateVerificationToken,
   generateTwoFactorToken,

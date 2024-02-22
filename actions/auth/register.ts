@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs"
 import prisma from "@/lib/prisma"
 import { getUserByEmail } from "@/data/user"
 import { generateVerificationToken } from "@/lib/tokens"
-import { sendVerificationEmail } from "@/lib/mail"
+import { sendVerificationEmail } from "@/lib/smtp"
 import { UserRole } from "@prisma/client"
 
 /**
