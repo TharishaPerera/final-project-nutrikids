@@ -4,7 +4,7 @@ import * as z from "zod";
 import { ResetSchema } from "@/schemas/auth-schemas";
 import { getUserByEmail } from "@/data/user";
 import { generatePasswordResetToken } from "@/lib/tokens";
-import { sendPasswordResetEmail } from "@/lib/mail";
+import { sendPasswordResetEmail } from "@/lib/smtp";
 
 /**
  * Reset password 
