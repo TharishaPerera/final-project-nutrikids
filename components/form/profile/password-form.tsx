@@ -36,12 +36,11 @@ export const PasswordForm = () => {
           data?.error && toast.error(data.error);
           if (data.success) {
             toast.success(data.success);
-            form.reset()
+            form.reset();
           }
         })
         .catch((error) => {
           console.error("An error occurred: ", error);
-          console.error("Stack trace: ", error.stack);
           toast.error("Something went wrong. Please try again later!");
         });
     });

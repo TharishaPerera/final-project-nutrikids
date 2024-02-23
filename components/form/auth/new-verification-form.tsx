@@ -2,10 +2,10 @@
 
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { HashLoader } from "react-spinners";
 import { BadgeCheck, XCircle } from "lucide-react";
 
 import { newVerification } from "@/actions/auth/new-verification";
+import { Loader } from "@/components/common/loader";
 
 export const NewVerficationForm = () => {
   const searchParams = useSearchParams();
@@ -37,7 +37,7 @@ export const NewVerficationForm = () => {
 
   return (
     <div className="flex items-center justify-center w-full">
-      {!success && !error && <HashLoader color="#fff" size={35} />}
+      {!success && !error && <Loader size={35} />}
       {success && (
         <div className="flex items-center justify-center space-x-2">
           <BadgeCheck className="w-5 h-5" />

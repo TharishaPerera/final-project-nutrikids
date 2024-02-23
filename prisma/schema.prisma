@@ -204,8 +204,9 @@ model Assistant {
 model Post {
   id          String      @id @default(cuid())
   userId      String
+  title       String
   media       String?
-  content     String?
+  content     String?     @db.LongText
   isHelpfull  Int         @default(0)
   notHelpfull Int         @default(0)
   status      PostStatus  @default(NEW)
@@ -214,7 +215,7 @@ model Post {
   savedPost   SavedPost[]
 
   user    User      @relation(fields: [userId], references: [id])
-  Comment Comment[]
+  comment Comment[]
 }
 
 model SavedPost {

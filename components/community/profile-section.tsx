@@ -28,12 +28,11 @@ export const ProfileSection = () => {
         <span className="text-lg tracking-wider font-medium">{name}</span>
       </div>
       <div className="space-y-2 w-full">
-      <Link
+        <Link
           href="/community"
           className={cn(
             "bg-secondary text-secondary-foreground p-4 flex w-full items-center justify-center rounded-md text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700",
-            pathname == "/community" &&
-              "bg-slate-200 dark:bg-slate-700"
+            pathname == "/community" && "bg-slate-200 dark:bg-slate-700"
           )}
         >
           Feed
@@ -47,6 +46,16 @@ export const ProfileSection = () => {
           )}
         >
           Saved Posts
+        </Link>
+        <Link
+          href="/community/my-posts"
+          className={cn(
+            "bg-secondary text-secondary-foreground p-4 flex w-full items-center justify-center rounded-md text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700",
+            pathname == "/community/my-posts" &&
+              "bg-slate-200 dark:bg-slate-700"
+          )}
+        >
+          My Posts
         </Link>
       </div>
     </div>
