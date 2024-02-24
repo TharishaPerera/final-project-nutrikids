@@ -13,13 +13,14 @@ interface ToolTipProps {
   size: 'default' | 'sm' | 'lg' | 'icon'
   variant: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
   children: React.ReactNode
+  className?: string
 }
 
-export const ToolTip: React.FC<ToolTipProps> = ({ children, message, size, variant }) => {
+export const ToolTip: React.FC<ToolTipProps> = ({ children, message, size, variant, className }) => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className={cn(buttonVariants({ variant: variant, size: size}))}>{children}</TooltipTrigger>
+        <TooltipTrigger className={cn(buttonVariants({ variant: variant, size: size}), className)}>{children}</TooltipTrigger>
         <TooltipContent>
           <p>{message}</p>
         </TooltipContent>

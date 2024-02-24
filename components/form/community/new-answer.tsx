@@ -41,8 +41,7 @@ export const NewAnswerForm = () => {
                     form.reset();
         
                     // reload page to update new post
-                    router.replace(pathname)
-                    router.refresh()
+                    location.reload()
                   }
             })
             .catch((error) => {

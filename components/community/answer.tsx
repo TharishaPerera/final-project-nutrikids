@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { dateFormat } from "@/lib/utils";
 import { BadgeCheck } from "lucide-react";
+import { ToolTip } from "../common/tool-tip";
 
 interface UserRole {
   role?: string;
@@ -62,7 +63,11 @@ export const Answer: React.FC<AnswerProps> = ({ answer, user }) => {
               </div>
               <p className="text-xs">{dateFormat(answer.createdAt)}</p>
             </div>
-            <div>{answer.validity && <BadgeCheck />}</div>
+            <div>{answer.validity && (
+              <ToolTip message="Verified answer" size="icon" variant="ghost" className="rounded-full">
+                <BadgeCheck />
+              </ToolTip>
+          )}</div>
           </div>
         </div>
       </div>

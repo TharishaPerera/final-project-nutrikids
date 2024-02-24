@@ -102,6 +102,9 @@ export const GetPostById = async (id: string) => {
             }
           },
           comment: {
+            orderBy: {
+              createdAt: "desc",
+            },
             include: {
               user: {
                 include: {
