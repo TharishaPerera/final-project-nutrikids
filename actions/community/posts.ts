@@ -2,11 +2,11 @@
 
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { NewPostSchema } from "@/schemas/new-post-schema";
+import { NewPostSchema } from "@/schemas/community-schema";
 import * as z from "zod";
 
 /**
- *
+ * Create a post on community
  * @param values NewPostSchema
  * @returns message object
  */
@@ -34,7 +34,7 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
     },
   });
 
-  return { success: "Post created successfully!" };
+  return { success: "Post created successfully!", post: post.id };
 };
 
 /**
@@ -69,9 +69,58 @@ export const getAllPosts = async () => {
         },
       },
     });
-    return { data: allPosts };
+
+    return { allPosts };
   } catch (error) {
     console.log(error);
     return { error: "Error occurred when retrieving data!" };
   }
 };
+
+/**
+ * Get post by post id
+ * @param id string
+ * @returns post 
+ */
+export const GetPostById = async (id: string) => {
+  if (!id) {
+      return { error: "Post id not found!" };
+  }
+
+  const post = await prisma.post.findFirst({
+      where: {
+          id: id
+      },
+      include: {
+          user: {
+            include: {
+              userRole: {
+                select: {
+                  role: true,
+                }
+              }
+            }
+          },
+          comment: {
+            include: {
+              user: {
+                include: {
+                  userRole: {
+                    select: {
+                      role: true,
+                    }
+                  }
+                }
+              },
+            }
+          },
+          _count: {
+              select: {
+                  comment: true
+              }
+          }
+      }
+  })
+
+  return { post }
+}

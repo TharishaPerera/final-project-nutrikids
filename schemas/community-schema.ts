@@ -9,3 +9,10 @@ export const NewPostSchema = z.object({
     .string()
     .min(10, { message: "Post content should be more than 10 characters!" }),
 });
+
+/**
+ * New answer schema
+ */
+export const NewAnswerSchema = z.object({
+  answer: z.string().min(1, { message: "Answer should be more than 10 characters!" }),
+})

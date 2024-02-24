@@ -1,16 +1,50 @@
 "use client";
 
 import { getAllPosts } from "@/actions/community/posts";
-import { Post } from "@prisma/client";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Loader } from "@/components/common/loader";
 import { InfoAlert } from "@/components/common/alerts";
 import { CommunityPost } from "@/components/community/community-post";
+import { PostStatus } from "@prisma/client";
+
+interface PostObject {
+  id: string;
+  userId: string;
+  title: string;
+  media: string | null;
+  content: string;
+  isHelpfull: number;
+  notHelpfull: number;
+  status: PostStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: Date;
+    image: string | null;
+    password: string;
+    telephone: string | null;
+    role: number;
+    isTwoFactorEnabled: boolean;
+    subscriptionId: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    userRole: {
+      role: string;
+    };
+  };
+  _count: {
+    comment: number;
+  };
+}
+
 
 export const CommunityFeed = () => {
-  const [data, setData] = useState<Post[]>([]);
   const [isPending, startTransition] = useTransition();
+  const [data, setData] = useState<PostObject[]>([]);
 
   useEffect(() => {
     fetchPosts();
@@ -19,10 +53,12 @@ export const CommunityFeed = () => {
   const fetchPosts = () => {
     startTransition(() => {
       getAllPosts()
-        .then((data) => {
-          data.error && toast.error(data.error);
-          if (data.data) {
-            setData(data.data);
+        .then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else {
+            const { allPosts } = response
+            setData(allPosts)
           }
         })
         .catch((error) => {

@@ -9,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { NewPostSchema } from "@/schemas/new-post-schema";
+import { NewPostSchema } from "@/schemas/community-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -20,10 +20,12 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { createPost } from "@/actions/community/posts";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // TODO: handle media on posts
 export const NewPostForm = () => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof NewPostSchema>>({
     resolver: zodResolver(NewPostSchema),
@@ -43,6 +45,7 @@ export const NewPostForm = () => {
             form.reset();
 
             // reload page to update new post
+            router.push(`/community/posts/${data.post}`)
           }
         })
         .catch((error) => {
@@ -65,7 +68,7 @@ export const NewPostForm = () => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Post title"
+                        placeholder="Question Title"
                         className="resize-none"
                         disabled={isPending}
                         {...field}
@@ -82,7 +85,7 @@ export const NewPostForm = () => {
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        placeholder="Ask questions here"
+                        placeholder="What's on your mind?"
                         className="resize-none"
                         disabled={isPending}
                         {...field}
