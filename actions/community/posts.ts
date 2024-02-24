@@ -80,50 +80,124 @@ export const getAllPosts = async () => {
 /**
  * Get post by post id
  * @param id string
- * @returns post 
+ * @returns post
  */
 export const GetPostById = async (id: string) => {
   if (!id) {
-      return { error: "Post id not found!" };
+    return { error: "Post id not found!" };
   }
 
   const post = await prisma.post.findFirst({
-      where: {
-          id: id
+    where: {
+      id: id,
+    },
+    include: {
+      user: {
+        include: {
+          userRole: {
+            select: {
+              role: true,
+            },
+          },
+        },
       },
-      include: {
+      comment: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        include: {
           user: {
             include: {
               userRole: {
                 select: {
                   role: true,
-                }
-              }
-            }
-          },
-          comment: {
-            orderBy: {
-              createdAt: "desc",
-            },
-            include: {
-              user: {
-                include: {
-                  userRole: {
-                    select: {
-                      role: true,
-                    }
-                  }
-                }
+                },
               },
-            }
+            },
           },
-          _count: {
-              select: {
-                  comment: true
-              }
-          }
-      }
+        },
+      },
+      _count: {
+        select: {
+          comment: true,
+        },
+      },
+    },
+  });
+
+  return { post };
+};
+
+/**
+ * Save post for the current user
+ * @param id string
+ * @returns message object
+ */
+export const SaveUnsavePost = async (id: string) => {
+  const session = await currentUser();
+
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!id) {
+    return { error: "Post id not found!" };
+  }
+
+  // check if the post is already saved
+  const savedPost = await prisma.savedPost.findFirst({
+    where: {
+      userId: session.id,
+      postId: id,
+    },
+  });
+
+  // if post is already saved delete id
+  if (savedPost) {
+    await prisma.savedPost.delete({
+      where: {
+        id: savedPost.id,
+      },
+    });
+
+    return { success: "Post unsaved successfully!" };
+  }
+
+  // else save the post for current user
+  await prisma.savedPost.create({
+    data: {
+      postId: id,
+      userId: session.id,
+    },
+  });
+
+  return { success: "Post saved successfully!" };
+};
+
+/**
+ * Check current post is saved or not by the current user
+ * @param id string
+ * @returns saved boolean value
+ */
+export const IsCurrentPostSaved = async (id: string) => {
+  const session = await currentUser();
+
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!id) {
+    return { error: "Post id not found!" };
+  }
+
+  const isCurrentPostSaved = await prisma.savedPost.findFirst({
+    where: {
+      userId: session.id,
+      postId: id,
+    }
   })
 
-  return { post }
+  if (isCurrentPostSaved) {
+    return { saved: true }
+  } else {
+    return { saved: false }
+  }
 }

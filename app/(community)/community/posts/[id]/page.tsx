@@ -1,6 +1,10 @@
 "use client";
 
-import { GetPostById } from "@/actions/community/posts";
+import {
+  GetPostById,
+  IsCurrentPostSaved,
+  SaveUnsavePost,
+} from "@/actions/community/posts";
 import { InfoAlert, WarningAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
 import { ToolTip } from "@/components/common/tool-tip";
@@ -8,16 +12,15 @@ import { Answer } from "@/components/community/answer";
 import { NewAnswerForm } from "@/components/form/community/new-answer";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { dateFormat } from "@/lib/utils";
+import { cn, dateFormat } from "@/lib/utils";
 import { CommentStatus, PostStatus } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Bookmark } from "lucide-react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { boolean, number, string } from "zod";
 
 interface UserRole {
   role?: string;
@@ -72,20 +75,25 @@ interface Post {
 }
 
 const PostPage = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const { theme } = useTheme()
   const [data, setData] = useState<Post | undefined | null>();
   const [isPending, startTransition] = useTransition();
+  const [isSaved, setIsSaved] = useState<boolean | undefined>(false);
   const pathname = usePathname();
   var parts = pathname.split("/");
   var postId = parts[parts.length - 1];
 
+  const fillColor = theme == 'light' ? 'fill-black' : 'fill-white';
+
   useEffect(() => {
     startTransition(() => {
+      // get post by id
       GetPostById(postId)
         .then((response) => {
           if (response?.error) {
             toast.error(response.error);
-            router.push('/community')
+            router.push("/community");
           }
           setData(response.post);
         })
@@ -93,8 +101,39 @@ const PostPage = () => {
           console.error(error);
           toast.error("Something went wrong. Please try again later!");
         });
+
+      // check current post is saved or not
+      checkPostSaved();
     });
   }, []);
+
+  const checkPostSaved = () => {
+    IsCurrentPostSaved(postId)
+      .then((response) => {
+        setIsSaved(response.saved);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Something went wrong. Please try again later!");
+      });
+  };
+
+  const savePost = () => {
+    startTransition(() => {
+      SaveUnsavePost(postId)
+        .then((response) => {
+          response?.error && toast.error(response.error);
+          response?.success && toast.success(response.success);
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Something went wrong. Please try again later!");
+        })
+        .finally(() => {
+          checkPostSaved();
+        });
+    });
+  };
 
   if (isPending || !data) {
     return <Loader />;
@@ -118,9 +157,16 @@ const PostPage = () => {
       <Separator />
       <div className="flex justify-between items-center space-x-2">
         <h1 className="text-lg md:text-2xl">{data.title}</h1>
-        <ToolTip message="Save Post" variant="secondary" size="icon">
-          <Bookmark className="w-5 h-5 md:w-6 md:h-6 fill-black" />
-        </ToolTip>
+        <div onClick={savePost}>
+          <ToolTip message="Save Post" variant="secondary" size="icon">
+            <Bookmark
+              className={cn(
+                isSaved ? fillColor : "",
+                "w-5 h-5 md:w-6 md:h-6"
+              )}
+            />
+          </ToolTip>
+        </div>
       </div>
       <div>
         <div className="text-md">{data.content}</div>
