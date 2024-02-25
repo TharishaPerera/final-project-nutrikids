@@ -158,7 +158,7 @@ const PostPage = () => {
       <div className="flex justify-between items-center space-x-2">
         <h1 className="text-lg md:text-2xl">{data.title}</h1>
         <div onClick={savePost}>
-          <ToolTip message="Save Post" variant="secondary" size="icon">
+          <ToolTip message={isSaved ? "Lose Post" : "Save Post"} variant="secondary" size="icon">
             <Bookmark
               className={cn(
                 isSaved ? fillColor : "",
