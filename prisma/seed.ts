@@ -12,22 +12,27 @@ async function seedUserRole () {
     data: [
       {
         id: 10001,
+        level: 100,
         role: "USER",
       },
       {
         id: 10002,
+        level: 500,
         role: "ASSISTANT",
       },
       {
         id: 10003,
+        level: 1000,
         role: "CONSULTANT",
       },
       {
         id: 10004,
+        level: 5000,
         role: "COMPANY_ADMIN",
       },
       {
         id: 10005,
+        level: 10000,
         role: "SUPER_ADMIN",
       },
     ],
