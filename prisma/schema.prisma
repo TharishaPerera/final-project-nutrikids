@@ -77,6 +77,7 @@ model User {
 
 model UserRole {
   id        Int      @id @default(autoincrement())
+  level     Int
   role      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
