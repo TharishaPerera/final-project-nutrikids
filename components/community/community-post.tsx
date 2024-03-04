@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
 import Link from "next/link";
+import { dateFormat } from "@/lib/utils";
 
 interface CommunityPostProps {
   id: string;
@@ -33,7 +34,7 @@ export const CommunityPost: React.FC<CommunityPostProps> = ({
         <div className="flex justify-between">
           <div>
             <h1 className="text-sm font-medium capitalize">{name}</h1>
-            <p className="text-xs">{dateTime.toISOString()}</p>
+            <p className="text-xs">{dateFormat(dateTime)}</p>
           </div>
           <Badge
             variant="outline"
