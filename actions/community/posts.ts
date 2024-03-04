@@ -201,3 +201,10 @@ export const IsCurrentPostSaved = async (id: string) => {
     return { saved: false }
   }
 }
+
+// TODO: Add MarkPostHelpful
+export const MarkPostHelpful = async (id: string) => {
+  if (!id) {
+    return { error: "Post id not found!" };
+  }
+}

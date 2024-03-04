@@ -76,7 +76,7 @@ interface Post {
 
 const PostPage = () => {
   const router = useRouter();
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   const [data, setData] = useState<Post | undefined | null>();
   const [isPending, startTransition] = useTransition();
   const [isSaved, setIsSaved] = useState<boolean | undefined>(false);
@@ -84,7 +84,7 @@ const PostPage = () => {
   var parts = pathname.split("/");
   var postId = parts[parts.length - 1];
 
-  const fillColor = theme == 'light' ? 'fill-black' : 'fill-white';
+  const fillColor = theme == "light" ? "fill-black" : "fill-white";
 
   useEffect(() => {
     startTransition(() => {
@@ -135,6 +135,18 @@ const PostPage = () => {
     });
   };
 
+  const markHelpful = () => {
+    startTransition(() => {
+      // TODO:
+    });
+  };
+
+  const markNotHelpful = () => {
+    startTransition(() => {
+      // TODO:
+    });
+  };
+
   if (isPending || !data) {
     return <Loader />;
   }
@@ -158,12 +170,13 @@ const PostPage = () => {
       <div className="flex justify-between items-center space-x-2">
         <h1 className="text-lg md:text-2xl">{data.title}</h1>
         <div onClick={savePost}>
-          <ToolTip message={isSaved ? "Lose Post" : "Save Post"} variant="secondary" size="icon">
+          <ToolTip
+            message={isSaved ? "Lose Post" : "Save Post"}
+            variant="secondary"
+            size="icon"
+          >
             <Bookmark
-              className={cn(
-                isSaved ? fillColor : "",
-                "w-5 h-5 md:w-6 md:h-6"
-              )}
+              className={cn(isSaved ? fillColor : "", "w-5 h-5 md:w-6 md:h-6")}
             />
           </ToolTip>
         </div>
@@ -184,12 +197,19 @@ const PostPage = () => {
       <div className="border rounded-lg p-2 flex justify-between items-center">
         <div className="flex space-x-2">
           <ToolTip message="Mark Helpful" variant="secondary" size="sm">
-            <ArrowBigUp className="w-6 h-6 mr-1" />
-            {data.isHelpfull}
+            <div onClick={markHelpful} className="flex items-center space-x-2">
+              <ArrowBigUp className="w-6 h-6 mr-1" />
+              {data.isHelpfull}
+            </div>
           </ToolTip>
           <ToolTip message="Mark Not Helpful" variant="secondary" size="sm">
-            <ArrowBigDown className="w-6 h-6 mr-1" />
-            {data.notHelpfull}
+            <div
+              onClick={markNotHelpful}
+              className="flex items-center space-x-2"
+            >
+              <ArrowBigDown className="w-6 h-6 mr-1" />
+              {data.notHelpfull}
+            </div>
           </ToolTip>
         </div>
         <div>{data._count.comment} Answers</div>
