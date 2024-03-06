@@ -7,7 +7,14 @@ export const TopNavLinks = [
   { label: "Community", href: "/community" },
 ];
 
-export const showDashboardBtnLinks = ["/", "/about", "/pricing", "/contact", "/community"];
+export const showDashboardBtnLinks = [
+  "/",
+  "/about",
+  "/pricing",
+  "/contact",
+  "/community",
+  "/community/saved-posts",
+];
 
 export const SideNavLinks = [
   { label: "Dashboard", href: "/dashboard", user: "general" },

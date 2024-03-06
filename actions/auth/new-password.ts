@@ -1,11 +1,11 @@
 "use server";
 
+import * as z from "zod";
 import { getPasswordResetTokenByToken } from "@/data/password-reset-token";
 import { getUserByEmail } from "@/data/user";
 import { NewPasswordSchema } from "@/schemas/auth-schemas";
-import * as z from "zod";
-import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
+import { hashPassword } from "@/lib/encrypt";
 
 /**
  * Reset password 
@@ -41,7 +41,7 @@ export const newPassword = async (
     return { error: "Email does not exist!" };
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await hashPassword(password)
   await prisma.user.update({
     where: {
       id: existingUser.id,

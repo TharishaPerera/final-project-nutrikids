@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { LoginSchema } from "@/schemas/auth-schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Feather, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { FaGoogle } from "react-icons/fa";
 import { login } from "@/actions/auth/login";
 import { toast } from "sonner";
@@ -68,7 +68,7 @@ export const UserLoginForm = () => {
           }
         })
         .catch(() => {
-          toast.error("Something went wrong! Please try again.")
+          toast.error("Something went wrong! Please try again.");
         });
     });
   };
@@ -76,13 +76,23 @@ export const UserLoginForm = () => {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        {
-          theme === 'light' ? (
-            <Image className="mx-auto w-auto h-auto" src="/assets/feet-black.png" width={30} height={30} alt="logo" />
-          ) : (
-            <Image className="mx-auto w-auto h-auto" src="/assets/feet-white.png" width={30} height={30} alt="logo" />
-          )
-        }
+        {theme === "light" ? (
+          <Image
+            className="mx-auto w-auto h-auto"
+            src="/assets/feet-black.png"
+            width={30}
+            height={30}
+            alt="logo"
+          />
+        ) : (
+          <Image
+            className="mx-auto w-auto h-auto"
+            src="/assets/feet-white.png"
+            width={30}
+            height={30}
+            alt="logo"
+          />
+        )}
         <h1 className="text-2xl font-semibold tracking-tight">Welcome</h1>
         <p className="text-sm text-muted-foreground">
           Enter your email and password to sign in to your account

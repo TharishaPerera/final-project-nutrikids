@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import moment from 'moment';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -26,4 +27,13 @@ export function getFirstLetters(input?: string): string {
   }
 
   return result
+}
+
+/**
+ * 
+ * @param date Date
+ * @returns date formatted as '
+ */
+export const dateFormat = (date?: Date) => {
+  return moment(date).format('ddd MMM DD YYYY [at] h:mm A').toString();
 }
