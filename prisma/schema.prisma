@@ -73,6 +73,7 @@ model User {
 
   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
   userRole     UserRole      @relation(fields: [role], references: [id])
+  Helpful      Helpful[]
 }
 
 model UserRole {
@@ -203,20 +204,19 @@ model Assistant {
 }
 
 model Post {
-  id          String      @id @default(cuid())
-  userId      String
-  title       String
-  media       String?
-  content     String?     @db.LongText
-  isHelpfull  Int         @default(0)
-  notHelpfull Int         @default(0)
-  status      PostStatus  @default(NEW)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  savedPost   SavedPost[]
+  id        String      @id @default(cuid())
+  userId    String
+  title     String
+  media     String?
+  content   String?     @db.LongText
+  status    PostStatus  @default(NEW)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  savedPost SavedPost[]
 
-  user    User      @relation(fields: [userId], references: [id])
-  comment Comment[]
+  user      User      @relation(fields: [userId], references: [id])
+  comment   Comment[]
+  isHelpful Helpful[]
 }
 
 model SavedPost {
@@ -242,6 +242,17 @@ model Comment {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Helpful {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  postid    String
+  isHelpful Boolean
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postid], references: [id], onDelete: Cascade)
 }
 
 model Appointment {
