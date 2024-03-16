@@ -13,6 +13,7 @@ import { NewAnswerForm } from "@/components/form/community/new-answer";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 import { cn, dateFormat } from "@/lib/utils";
 import { CommentStatus, PostStatus } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Bookmark } from "lucide-react";
@@ -22,62 +23,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-interface UserRole {
-  role?: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified?: Date;
-  image?: string;
-  password?: string;
-  telephone?: string;
-  role?: number;
-  isTwoFactorEnabled?: boolean;
-  subscriptionId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  userRole: UserRole;
-}
-
-interface Comment {
-  id: string;
-  userId: string;
-  postId: string;
-  parent?: number;
-  status?: CommentStatus;
-  content?: string;
-  validity?: boolean;
-  createdAt?: Date;
-  user: User;
-}
-
-interface Count {
-  comment: number;
-}
-
-interface Post {
-  id: string;
-  userId: string;
-  title: string;
-  media?: string;
-  content?: string;
-  isHelpfull?: number;
-  notHelpfull?: number;
-  status?: PostStatus;
-  createdAt?: Date;
-  updatedAt?: Date;
-  user: User;
-  comment?: Comment[];
-  _count: Count;
-}
-
 const PostPage = () => {
   const router = useRouter();
   const { theme } = useTheme();
-  const [data, setData] = useState<Post | undefined | null>();
+  const [data, setData] = useState<PostInterface>();
   const [isPending, startTransition] = useTransition();
   const [isSaved, setIsSaved] = useState<boolean | undefined>(false);
   const pathname = usePathname();
@@ -95,7 +44,9 @@ const PostPage = () => {
             toast.error(response.error);
             router.push("/community");
           }
-          setData(response.post);
+          if (response?.post) {
+            setData(response.post);
+          }
         })
         .catch((error) => {
           console.error(error);
