@@ -80,7 +80,6 @@ export const UserSignupForm = () => {
     } = values;
 
     if (userType == "parent") {
-      console.log("parent")
       if ((!noOfChildren || noOfChildren == "") || (!youngestAge || youngestAge == "")) {
         setIsLoading(false);
         return toast.error(
