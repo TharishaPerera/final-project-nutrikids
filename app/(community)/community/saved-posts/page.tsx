@@ -8,30 +8,28 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-interface Post {
-  id: string;
-  userId: string;
-  title: string;
-  media: string | null;
-  content: string;
-  isHelpful: number;
-  notHelpful: number;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface Result {
+export interface SavedPostInterface {
   id: number;
   userId: string;
   postId: string;
-  post: Post;
+  post: {
+    id: string;
+    userId: string;
+    title: string;
+    media: string | null;
+    content: string | null;
+    isHelpfull: number | null;
+    notHelpfull: number | null;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }
 
 const SavedPostsPage = () => {
   const user = useCurrentUser();
   const [isPending, startTransition] = useTransition();
-  const [data, setData] = useState<Result[]>([]);
+  const [data, setData] = useState<SavedPostInterface[]>([]);
 
   useEffect(() => {
     fetchPosts();
@@ -40,15 +38,16 @@ const SavedPostsPage = () => {
   const fetchPosts = () => {
     startTransition(() => {
       getSavedPosts()
-        .then((response) => {
+        .then((response: { error?: string; savedPosts?: SavedPostInterface[]; }) => {
           if (response.error) {
             toast.error(response.error);
-          } else {
+          } 
+          if (response.savedPosts) {
             const { savedPosts } = response;
             setData(savedPosts);
           }
         })
-        .catch((error) => {
+        .catch((error: string) => {
           console.error(error);
           toast.error("Something went wrong. Please try again!");
         });
@@ -73,7 +72,7 @@ const SavedPostsPage = () => {
               <SavedPost
                 postId={post.post.id}
                 title={post.post.title}
-                content={post.post.content}
+                content={post.post.content!}
               />
             </div>
           ))}

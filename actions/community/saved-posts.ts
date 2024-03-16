@@ -2,14 +2,15 @@
 
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { SavedPostInterface } from "@/app/(community)/community/saved-posts/page";
 
 /**
  * Retrieves the saved posts for a given user.
  *
  * @param {string} userId - The ID of the user
- * @return {Promise<SavedPost[]>} An array of saved posts with their associated post details
+ * @return {Promise<SavedPostInterface[]>} An array of saved posts with their associated post details
  */
-export const getSavedPosts = async () => {
+export const getSavedPosts = async (): Promise<{ savedPosts: SavedPostInterface[] } | { error: string }> => {
   const session = await currentUser();
 
   if (!session || !session.id) {
