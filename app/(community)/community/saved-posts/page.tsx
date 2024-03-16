@@ -5,7 +5,7 @@ import { InfoAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
 import { SavedPost } from "@/components/community/saved-post";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { SavedPostInterface } from "@/interfaces/post-interfaces";
+import { SavedPostInterface } from "@/interfaces/post-interfaces/saved-post-interfaces";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
