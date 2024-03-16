@@ -2,7 +2,7 @@
 
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { SavedPostInterface } from "@/app/(community)/community/saved-posts/page";
+import { SavedPostInterface } from "@/interfaces/post-interfaces";
 
 /**
  * Retrieves the saved posts for a given user.

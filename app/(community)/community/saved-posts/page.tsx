@@ -5,26 +5,11 @@ import { InfoAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
 import { SavedPost } from "@/components/community/saved-post";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { SavedPostInterface } from "@/interfaces/post-interfaces";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export interface SavedPostInterface {
-  id: number;
-  userId: string;
-  postId: string;
-  post: {
-    id: string;
-    userId: string;
-    title: string;
-    media: string | null;
-    content: string | null;
-    isHelpfull: number | null;
-    notHelpfull: number | null;
-    status: string;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-}
+
 
 const SavedPostsPage = () => {
   const user = useCurrentUser();
