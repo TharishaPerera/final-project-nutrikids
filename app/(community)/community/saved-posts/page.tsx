@@ -5,33 +5,16 @@ import { InfoAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
 import { SavedPost } from "@/components/community/saved-post";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { SavedPostInterface } from "@/interfaces/post-interfaces/saved-post-interfaces";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-interface Post {
-  id: string;
-  userId: string;
-  title: string;
-  media: string | null;
-  content: string;
-  isHelpful: number;
-  notHelpful: number;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
-interface Result {
-  id: number;
-  userId: string;
-  postId: string;
-  post: Post;
-}
 
 const SavedPostsPage = () => {
   const user = useCurrentUser();
   const [isPending, startTransition] = useTransition();
-  const [data, setData] = useState<Result[]>([]);
+  const [data, setData] = useState<SavedPostInterface[]>([]);
 
   useEffect(() => {
     fetchPosts();
@@ -40,15 +23,16 @@ const SavedPostsPage = () => {
   const fetchPosts = () => {
     startTransition(() => {
       getSavedPosts()
-        .then((response) => {
+        .then((response: { error?: string; savedPosts?: SavedPostInterface[]; }) => {
           if (response.error) {
             toast.error(response.error);
-          } else {
+          } 
+          if (response.savedPosts) {
             const { savedPosts } = response;
             setData(savedPosts);
           }
         })
-        .catch((error) => {
+        .catch((error: string) => {
           console.error(error);
           toast.error("Something went wrong. Please try again!");
         });
@@ -73,7 +57,7 @@ const SavedPostsPage = () => {
               <SavedPost
                 postId={post.post.id}
                 title={post.post.title}
-                content={post.post.content}
+                content={post.post.content!}
               />
             </div>
           ))}

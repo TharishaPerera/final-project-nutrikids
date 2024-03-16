@@ -1,5 +1,7 @@
 "use server";
 
+import { AllPostsInterface } from "@/interfaces/post-interfaces/all-post-interface";
+import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NewPostSchema } from "@/schemas/community-schema";
@@ -42,7 +44,7 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
  */
 export const getAllPosts = async () => {
   try {
-    const allPosts = await prisma.post.findMany({
+    const allPosts: AllPostsInterface[] = await prisma.post.findMany({
       where: {
         status: {
           in: ["NEW", "APPROVED", "EDITED"], // TODO: Remove NEW status
@@ -53,7 +55,8 @@ export const getAllPosts = async () => {
       },
       include: {
         user: {
-          include: {
+          select: {
+            name: true,
             userRole: {
               select: {
                 role: true,
@@ -61,7 +64,6 @@ export const getAllPosts = async () => {
             },
           },
         },
-        comment: true,
         _count: {
           select: {
             comment: true,
@@ -87,19 +89,20 @@ export const GetPostById = async (id: string) => {
     return { error: "Post id not found!" };
   }
 
-  const post = await prisma.post.findFirst({
+  const post: PostInterface | null = await prisma.post.findFirst({
     where: {
       id: id,
     },
     include: {
       user: {
-        include: {
+        select: {
+          name: true,
           userRole: {
             select: {
               role: true,
             },
-          },
-        },
+          }
+        }
       },
       comment: {
         orderBy: {
@@ -107,13 +110,14 @@ export const GetPostById = async (id: string) => {
         },
         include: {
           user: {
-            include: {
+            select: {
+              name: true,
               userRole: {
                 select: {
                   role: true,
                 },
-              },
-            },
+              }
+            }
           },
         },
       },

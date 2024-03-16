@@ -7,7 +7,7 @@ import { dateFormat } from "@/lib/utils";
 
 interface CommunityPostProps {
   id: string;
-  name: string;
+  name: string | null;
   dateTime: Date;
   role: string;
   title: string;

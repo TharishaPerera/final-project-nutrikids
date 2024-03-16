@@ -5,38 +5,8 @@ import React from "react";
 import { dateFormat } from "@/lib/utils";
 import { BadgeCheck } from "lucide-react";
 import { ToolTip } from "../common/tool-tip";
+import { Comment, User } from "@/interfaces/post-interfaces/post-interface";
 
-interface UserRole {
-  role?: string;
-}
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified?: Date;
-  image?: string;
-  password?: string;
-  telephone?: string;
-  role?: number;
-  isTwoFactorEnabled?: boolean;
-  subscriptionId?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  userRole: UserRole;
-}
-
-interface Comment {
-  id: string;
-  userId: string;
-  postId: string;
-  parent?: number;
-  status?: CommentStatus;
-  content?: string;
-  validity?: boolean;
-  createdAt?: Date;
-  user: User;
-}
 
 interface AnswerProps {
   answer: Comment;
