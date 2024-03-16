@@ -1,5 +1,6 @@
 "use server";
 
+import { AllPostsInterface } from "@/interfaces/post-interfaces/all-post-interface";
 import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
@@ -43,7 +44,7 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
  */
 export const getAllPosts = async () => {
   try {
-    const allPosts = await prisma.post.findMany({
+    const allPosts: AllPostsInterface[] = await prisma.post.findMany({
       where: {
         status: {
           in: ["NEW", "APPROVED", "EDITED"], // TODO: Remove NEW status
@@ -54,7 +55,8 @@ export const getAllPosts = async () => {
       },
       include: {
         user: {
-          include: {
+          select: {
+            name: true,
             userRole: {
               select: {
                 role: true,
@@ -62,7 +64,6 @@ export const getAllPosts = async () => {
             },
           },
         },
-        comment: true,
         _count: {
           select: {
             comment: true,
