@@ -35,3 +35,5 @@ jobs:
     - name: Change Directory
       run: cd /home/tharisha/projects/project.tharishaperera.com.lk/actions-runner/_work/final-project-nutrikids/final-project-nutrikids
     - run: pm2 restart 2
+    - name: Print contents of .env.production file
+      run: cat .env.production
