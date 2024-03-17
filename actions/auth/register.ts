@@ -1,13 +1,12 @@
 "use server"
 
-import { RegisterSchema } from "@/schemas/auth-schemas"
 import * as z from "zod"
-import bcrypt from "bcryptjs"
+import { RegisterSchema } from "@/schemas/auth-schemas"
 import prisma from "@/lib/prisma"
 import { getUserByEmail } from "@/data/user"
 import { generateVerificationToken } from "@/lib/tokens"
-import { sendVerificationEmail } from "@/lib/mail"
-import { UserRole } from "@prisma/client"
+import { sendVerificationEmail } from "@/lib/smtp"
+import { hashPassword } from "@/lib/encrypt"
 
 /**
  * User registration 
@@ -22,7 +21,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     }
 
     const { name, email, password, userType } = validatedFields.data
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await hashPassword(password)
 
     const existingUser = await getUserByEmail(email)
     
@@ -30,7 +29,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: "Email already in use!" }
     }
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             name: name,
             email: email,
@@ -38,6 +37,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             role: userType == "consultant" ? 10003 : 10001
         }
     })
+
+    if (userType == "consultant") {
+        await prisma.pediatrician.create({
+            data: {
+                userId: user.id
+            }
+        })
+    }
 
     const verificationToken = await generateVerificationToken(email)
 

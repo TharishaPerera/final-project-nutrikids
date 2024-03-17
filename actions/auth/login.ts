@@ -2,7 +2,7 @@
 
 import { signIn } from "@/auth";
 import { getUserByEmail } from "@/data/user";
-import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
+import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/smtp";
 import {
   generateVerificationToken,
   generateTwoFactorToken,
@@ -12,11 +12,18 @@ import { LoginSchema } from "@/schemas/auth-schemas";
 import { AuthError } from "next-auth";
 import * as z from "zod";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
-import { error } from "console";
 import prisma from "@/lib/prisma";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
-export const login = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
+/**
+ *
+ * @param values LoginSchema
+ * @param callbackUrl string
+ */
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null
+) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {

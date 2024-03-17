@@ -4,6 +4,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { UserMenu } from "@/components/user-menu";
@@ -11,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/theme-toggler";
 import { ApplicationName, TopNavLinks, showDashboardBtnLinks } from "@/config/navlinks.config";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
-import { X } from "lucide-react";
 
 export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
   const { data: session } = useSession();
@@ -53,7 +53,7 @@ export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement
         </div>
         <div className="space-x-4 hidden md:flex">
           {TopNavLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={cn("text-md", pathname == link.href && "underline underline-offset-8")}>
+            <Link key={link.href} href={link.href} className={cn("text-md", pathname.includes(link.href) && "underline underline-offset-8")}>
               {link.label}
             </Link>
           ))}

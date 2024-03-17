@@ -77,6 +77,7 @@ model User {
 
 model UserRole {
   id        Int      @id @default(autoincrement())
+  level     Int
   role      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -172,7 +173,7 @@ model Pediatrician {
   userId           String        @unique
   qualifications   String?
   speacializations String?
-  description      String
+  description      String?
   availability     Availabilty[]
   assistant        Assistant[]
   appointment      Appointment[]
@@ -204,8 +205,9 @@ model Assistant {
 model Post {
   id          String      @id @default(cuid())
   userId      String
+  title       String
   media       String?
-  content     String?
+  content     String?     @db.LongText
   isHelpfull  Int         @default(0)
   notHelpfull Int         @default(0)
   status      PostStatus  @default(NEW)
@@ -214,7 +216,7 @@ model Post {
   savedPost   SavedPost[]
 
   user    User      @relation(fields: [userId], references: [id])
-  Comment Comment[]
+  comment Comment[]
 }
 
 model SavedPost {
@@ -224,16 +226,19 @@ model SavedPost {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
 }
 
 model Comment {
-  id       Int           @id @default(autoincrement())
-  userId   String
-  postId   String
-  parent   Int?
-  status   CommentStatus @default(ACTIVE)
-  content  String
-  validity Boolean       @default(true)
+  id        Int           @id @default(autoincrement())
+  userId    String
+  postId    String
+  parent    Int?
+  status    CommentStatus @default(ACTIVE)
+  content   String
+  validity  Boolean       @default(false)
+  createdAt DateTime      @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
