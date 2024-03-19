@@ -5,6 +5,7 @@ import { z } from "zod"
 import { headers } from 'next/headers';
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { GetPostById } from "./posts";
 
 /**
  * Submit a answer / comment on a post
@@ -38,6 +39,9 @@ export const SubmitAnswer = async (value: z.infer<typeof NewAnswerSchema>) => {
         }
     })
 
-    return { success: "Answer posted successfully!"}
+    // get updated post
+    const post = await GetPostById(slug);
+
+    return { success: "Answer posted successfully!", post: post.post }
 }
 
