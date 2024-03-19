@@ -3,7 +3,7 @@
 import { DataTable } from "@/components/common/data-table";
 import { UserTableInterface } from "@/interfaces/user-interfaces";
 import { startTransition, useEffect, useState } from "react";
-import { columns } from "./columns";
+import { columns } from "./_components/columns";
 import { getAllUsers } from "@/actions/user/user";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
