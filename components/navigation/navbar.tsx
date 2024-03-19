@@ -59,7 +59,7 @@ export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement
           ))}
         </div>
         <div className="flex items-center justify-end space-x-6">
-          {session && showDashboardBtnLinks.includes(pathname) && (
+          {session && (showDashboardBtnLinks.includes(pathname) || pathname.includes("/community/posts")) && (
             <Link
               href="/dashboard"
               className="hidden md:block text-sm md:text-md"

@@ -15,7 +15,7 @@ const SideNav = () => {
       <Link
         key={link.href}
         href={link.href}
-        className={cn("bg-secondary text-secondary-foreground p-4 flex w-full items-center rounded-md text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700", pathname == link.href && "bg-slate-200 dark:bg-slate-700")}
+        className={cn("bg-secondary text-secondary-foreground p-4 flex w-full items-center rounded-md text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700", pathname.includes(link.href.toString()) && "bg-slate-200 dark:bg-slate-700")}
       >
         {link.label}
       </Link>
