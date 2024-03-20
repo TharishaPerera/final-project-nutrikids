@@ -18,7 +18,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         </div>
       </header>
       <div className="grid flex-1 px-6 md:px-16 gap-6 md:grid-cols-[300px_1fr]">
-        <aside className="hidden w-[300px] flex-col md:flex border-r ">
+        <aside className="hidden w-[300px] flex-col md:flex ">
           <SideNav />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden ">

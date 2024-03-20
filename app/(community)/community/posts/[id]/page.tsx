@@ -15,7 +15,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 import { cn, dateFormat } from "@/lib/utils";
-import { CommentStatus, PostStatus } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Bookmark } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -70,20 +69,21 @@ const PostPage = () => {
   };
 
   const savePost = () => {
-    startTransition(() => {
       SaveUnsavePost(postId)
         .then((response) => {
           response?.error && toast.error(response.error);
           response?.success && toast.success(response.success);
+
+          setIsSaved(response.success ? !isSaved : isSaved);
         })
         .catch((error) => {
           console.log(error);
           toast.error("Something went wrong. Please try again later!");
-        })
-        .finally(() => {
-          checkPostSaved();
         });
-    });
+  };
+
+  const handleDataUpdate = (data: PostInterface) => {
+    setData(data);
   };
 
   const markHelpful = () => {
@@ -166,7 +166,7 @@ const PostPage = () => {
         <div>{data._count.comment} Answers</div>
       </div>
       <div className="border rounded-lg p-2 flex justify-between items-center">
-        <NewAnswerForm />
+        <NewAnswerForm onDataUpdate={handleDataUpdate} />
       </div>
       <div>
         <h1 className="text-base md:text-lg font-medium">Answers</h1>
