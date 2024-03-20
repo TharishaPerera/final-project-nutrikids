@@ -1,7 +1,6 @@
 "use client";
 
 import { DataTable } from "@/components/common/data-table";
-import { UserTableInterface } from "@/interfaces/user-interfaces";
 import { useEffect, useState, useTransition } from "react";
 import { columns } from "./_components/columns";
 import { getAllUsers } from "@/actions/user/user";
@@ -11,6 +10,7 @@ import { Loader } from "@/components/common/loader";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { PageTitle } from "@/components/common/page-title";
+import { UserTableInterface } from "@/interfaces/user-interfaces/user-interfaces";
 
 const UsersPage = () => {
   const [data, setData] = useState<UserTableInterface[]>([]);
