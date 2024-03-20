@@ -1,5 +1,6 @@
 "use client";
 
+import { PageTitle } from "@/components/common/page-title";
 import { GeneralProfileForm } from "@/components/form/profile/general-profile-form";
 import { PasswordForm } from "@/components/form/profile/password-form";
 import React from "react";
@@ -7,7 +8,7 @@ import React from "react";
 const ProfilePage = () => {
   return (
     <div>
-      <h1 className="text-2xl font-semibold">Profile Details</h1>
+      <PageTitle title="Profile Details" />
       <div className="w-full mt-5">
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

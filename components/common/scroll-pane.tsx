@@ -5,5 +5,5 @@ interface ScrollPaneProps {
 }
 
 export const ScrollPane: React.FC<ScrollPaneProps> = ({ children }) => {
-  return <div className="h-[680px] overflow-y-scroll">{children}</div>;
+  return <div className="md:h-[700px] overflow-y-scroll">{children}</div>;
 };

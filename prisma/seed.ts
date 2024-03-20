@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client'
+import { seedUsers } from './dummy-data/dummy-data';
 const prisma = new PrismaClient()
 
 async function main() {
   await seedUserRole()
+  
+  // await seedUsers()
 }
 /**
  * Seed user role data to the UserRole table
