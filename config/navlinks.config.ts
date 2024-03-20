@@ -14,6 +14,7 @@ export const showDashboardBtnLinks = [
   "/contact",
   "/community",
   "/community/saved-posts",
+  "/community/posts",
 ];
 
 export const SideNavLinks = [
