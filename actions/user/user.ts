@@ -1,6 +1,6 @@
 "use server";
 
-import { UserTableInterface } from "@/interfaces/user-interfaces";
+import { UserTableInterface } from "@/interfaces/user-interfaces/user-interfaces";
 import prisma from "@/lib/prisma";
 
 export const getAllUsers = async () => {

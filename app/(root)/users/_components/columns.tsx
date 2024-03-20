@@ -1,7 +1,6 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { UserTableInterface } from "@/interfaces/user-interfaces";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { CopyIcon, Edit, MoreHorizontal, ArrowUpDown, Trash } from "lucide-react";
@@ -9,6 +8,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { toast } from "sonner";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { UserTableInterface } from "@/interfaces/user-interfaces/user-interfaces";
 
 export const columns: ColumnDef<UserTableInterface>[] = [
   {
