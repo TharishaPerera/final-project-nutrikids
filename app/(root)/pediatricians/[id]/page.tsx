@@ -9,11 +9,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollPane } from "@/components/common/scroll-pane";
 
 // TODO: add dynamic data using server actions
 const PediatricianPage = () => {
   return (
-    <div className="h-[680px] overflow-y-scroll">
+    <ScrollPane>
       <div className="flex flex-col lg:flex-row lg:space-x-4 space-x-0 lg:space-y-0 space-y-4">
         <div className="lg:w-1/4 w-full order-1 space-y-4">
           <div>
@@ -108,7 +109,7 @@ const PediatricianPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </ScrollPane>
   );
 };
 

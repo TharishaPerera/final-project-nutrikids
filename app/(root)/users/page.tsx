@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Loader } from "@/components/common/loader";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { PageTitle } from "@/components/common/page-title";
 
 const UsersPage = () => {
   const [data, setData] = useState<UserTableInterface[]>([]);
@@ -37,11 +38,10 @@ const UsersPage = () => {
     return <Loader />;
   }
 
-  console.log(data);
   return (
     <div className="px-2">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold">All Users</h1>
+        <PageTitle title="All Users" />
         <Link href="/users/create" className={cn(buttonVariants({ variant: "default", size: "sm" }))}>New User</Link>
       </div>
       <DataTable data={data} columns={columns} />
