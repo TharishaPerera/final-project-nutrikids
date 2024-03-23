@@ -56,6 +56,7 @@ const MyPostsPage = () => {
                 postId={post.id}
                 title={post.title}
                 content={post.content!}
+                actions={true}
               />
             </div>
           ))}

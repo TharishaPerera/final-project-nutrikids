@@ -16,7 +16,7 @@ export const getMyPosts = async () => {
   if (!session || !session.id) {
     return { error: "User id not found!" };
   }
-  console.log(session.id)
+
   const posts: MyPostsInterface[] = await prisma.post.findMany({
     where: {
       userId: session.id,
@@ -31,8 +31,6 @@ export const getMyPosts = async () => {
       createdAt: "desc",
     }
   });
-
-  console.log(posts)
 
   return { myPosts: posts };
 };
