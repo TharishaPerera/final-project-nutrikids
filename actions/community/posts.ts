@@ -101,8 +101,8 @@ export const GetPostById = async (id: string) => {
             select: {
               role: true,
             },
-          }
-        }
+          },
+        },
       },
       comment: {
         orderBy: {
@@ -116,8 +116,8 @@ export const GetPostById = async (id: string) => {
                 select: {
                   role: true,
                 },
-              }
-            }
+              },
+            },
           },
         },
       },
@@ -196,19 +196,43 @@ export const IsCurrentPostSaved = async (id: string) => {
     where: {
       userId: session.id,
       postId: id,
-    }
-  })
+    },
+  });
 
   if (isCurrentPostSaved) {
-    return { saved: true }
+    return { saved: true };
   } else {
-    return { saved: false }
+    return { saved: false };
   }
-}
+};
 
 // TODO: Add MarkPostHelpful
 export const MarkPostHelpful = async (id: string) => {
   if (!id) {
     return { error: "Post id not found!" };
   }
-}
+};
+
+export const DeletePost = async (id: string) => {
+  const session = await currentUser();
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!id) {
+    return { error: "Post id not found!" };
+  }
+
+  try {
+    await prisma.post.delete({
+      where: {
+        id: id,
+        userId: session.id,
+      },
+    });
+
+    return { success: "Post deleted successfully!" };
+  } catch (error) {
+    console.log(error);
+    return { error: "Error occurred when deleting post!" };
+  }
+};
