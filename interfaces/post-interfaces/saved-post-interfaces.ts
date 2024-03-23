@@ -1,18 +1,24 @@
-
 export interface SavedPostInterface {
-    id: number;
+  id: number;
+  userId: string;
+  postId: string;
+  post: {
+    id: string;
     userId: string;
-    postId: string;
-    post: {
-      id: string;
-      userId: string;
-      title: string;
-      media: string | null;
-      content: string | null;
-      isHelpfull: number | null;
-      notHelpfull: number | null;
-      status: string;
-      createdAt: Date;
-      updatedAt: Date;
-    };
-  }
+    title: string;
+    media: string | null;
+    content: string | null;
+    isHelpfull: number | null;
+    notHelpfull: number | null;
+    status: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+}
+
+export interface MyPostsInterface {
+  id: string;
+  userId: string;
+  title: string;
+  content: string | null;
+}

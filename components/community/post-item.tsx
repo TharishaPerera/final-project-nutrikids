@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-interface SavedPostProps {
+interface PostItemProps {
   postId: string;
   title: string;
   content: string;
 }
 
-export const SavedPost: React.FC<SavedPostProps> = ({
+export const PostItem: React.FC<PostItemProps> = ({
   postId,
   title,
   content,
