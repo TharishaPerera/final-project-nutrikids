@@ -10,6 +10,12 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { hashPassword } from "@/lib/encrypt";
 
+interface USerData {
+  name: string;
+  image: string | null;
+  isTwoFactorEnabled?: boolean;
+}
+
 /**
  * Update general details of user profile
  * @param values UserProfileSchema
@@ -27,15 +33,20 @@ export const updateGeneralDetails = async (
 
   const { name, image, twoFactorEnabled } = validatedFields.data;
 
+  const userData: USerData = {
+    name: name,
+    image: image != "" ? image : null,
+  };
+
+  if (!session?.isOAuth) {
+    userData.isTwoFactorEnabled = twoFactorEnabled;
+  }
+
   const user = await prisma.user.update({
     where: {
       id: session?.id,
     },
-    data: {
-      name: name,
-      isTwoFactorEnabled: twoFactorEnabled,
-      image: image != "" ? image : null,
-    },
+    data: userData,
   });
 
   return { success: "General details updated successfully!" };

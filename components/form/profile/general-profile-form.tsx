@@ -139,7 +139,7 @@ export const GeneralProfileForm = () => {
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        disabled={isPending}
+                        disabled={isPending || user?.isOAuth}
                       />
                     </FormControl>
                   </FormItem>
