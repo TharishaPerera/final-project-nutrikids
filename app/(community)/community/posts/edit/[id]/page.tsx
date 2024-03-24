@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { GetPostById } from "@/actions/community/posts";
 import { Loader } from "@/components/common/loader";
@@ -10,33 +10,30 @@ import React, { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 const EditPostPage = () => {
-
   const [isPending, startTransition] = useTransition();
   const [data, setData] = useState<PostInterface>();
   const pathname = usePathname();
   var parts = pathname.split("/");
   var postId = parts[parts.length - 1];
 
-  if (postId) {
-    useEffect(() => {
-      startTransition(() => {
-        // get post by id
-        GetPostById(postId)
-          .then((response) => {
-            if (response?.error) {
-              toast.error(response.error);
-            }
-            if (response?.post) {
-              setData(response.post);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error("Something went wrong. Please try again later!");
-          });
-      });
-    }, []);
-  }
+  useEffect(() => {
+    startTransition(() => {
+      // get post by id
+      GetPostById(postId)
+        .then((response) => {
+          if (response?.error) {
+            toast.error(response.error);
+          }
+          if (response?.post) {
+            setData(response.post);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Something went wrong. Please try again later!");
+        });
+    });
+  }, []);
 
   if (!data) {
     return <Loader />;
