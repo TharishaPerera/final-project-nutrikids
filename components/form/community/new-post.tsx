@@ -18,40 +18,66 @@ import { Textarea } from "@/components/ui/textarea";
 import { ImagePlus, SendHorizonal, Video } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { createPost } from "@/actions/community/posts";
+import { createPost, GetPostById, updatePost } from "@/actions/community/posts";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 
+interface NewPostFormProps {
+  data?: PostInterface;
+  type?: "create" | "update";
+}
 // TODO: handle media on posts
-export const NewPostForm = () => {
+export const NewPostForm: React.FC<NewPostFormProps> = ({
+  data,
+  type = "create",
+}) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof NewPostSchema>>({
     resolver: zodResolver(NewPostSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      id: data ? data.id : "",
+      title: data ? data.title : "",
+      content: data ? data.content! : "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof NewPostSchema>) => {
     startTransition(() => {
-      createPost(values)
-        .then((data) => {
-          data?.error && toast.error(data.error);
-          if (data.success) {
-            toast.success(data.success);
-            form.reset();
+      if (type === "update") {
+        updatePost(values)
+          .then((data) => {
+            data?.error && toast.error(data.error);
+            if (data.success) {
+              toast.success(data.success);
 
-            // reload page to update new post
-            router.push(`/community/posts/${data.post}`)
-          }
-        })
-        .catch((error) => {
-          console.error("An error occurred: ", error);
-          toast.error("Something went wrong. Please try again later!");
-        });
+              // reload page to update new post
+              router.refresh();
+            }
+          })
+          .catch((error) => {
+            console.error("An error occurred: ", error);
+            toast.error("Something went wrong. Please try again later!");
+          });
+      } else {
+        createPost(values)
+          .then((data) => {
+            data?.error && toast.error(data.error);
+            if (data.success) {
+              toast.success(data.success);
+              form.reset();
+
+              // reload page to update new post
+              router.push(`/community/posts/${data.post}`);
+            }
+          })
+          .catch((error) => {
+            console.error("An error occurred: ", error);
+            toast.error("Something went wrong. Please try again later!");
+          });
+      }
     });
   };
 
