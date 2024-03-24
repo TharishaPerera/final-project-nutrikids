@@ -3,6 +3,7 @@
 import { getMyPosts } from "@/actions/community/my-posts";
 import { InfoAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
+import { CommunityHeading } from "@/components/community/community-heading";
 import { PostItem } from "@/components/community/post-item";
 import { MyPostsInterface } from "@/interfaces/post-interfaces/saved-post-interfaces";
 import React, { useEffect, useState, useTransition } from "react";
@@ -42,7 +43,8 @@ const MyPostsPage = () => {
   }
 
   return (
-    <div>
+    <div className="w-full space-y-4 p-2">
+      <CommunityHeading heading="My Posts" />
       {data.length < 1 && (
         <div className="w-full flex justify-center">
           <InfoAlert message="No posts available at the moment." />

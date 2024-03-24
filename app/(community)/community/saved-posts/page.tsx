@@ -3,6 +3,7 @@
 import { getSavedPosts } from "@/actions/community/saved-posts";
 import { InfoAlert } from "@/components/common/alerts";
 import { Loader } from "@/components/common/loader";
+import { CommunityHeading } from "@/components/community/community-heading";
 import { PostItem } from "@/components/community/post-item";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { SavedPostInterface } from "@/interfaces/post-interfaces/saved-post-interfaces";
@@ -44,7 +45,8 @@ const SavedPostsPage = () => {
   }
 
   return (
-    <div>
+    <div className="w-full space-y-4 p-2">
+      <CommunityHeading heading="Saved Posts" />
       {data.length < 1 && (
         <div className="w-full flex justify-center">
           <InfoAlert message="No posts available at the moment." />
