@@ -4,6 +4,7 @@ import * as z from "zod";
  * New community post schema
  */
 export const NewPostSchema = z.object({
+  id: z.string().optional(),
   title: z.string().min(1, { message: "Post title can not be empty!" }),
   content: z
     .string()

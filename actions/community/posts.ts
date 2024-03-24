@@ -40,6 +40,41 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
 };
 
 /**
+ * Update a post on community
+ * @param values NewPostSchema
+ * @returns message object
+ */
+export const updatePost = async (values: z.infer<typeof NewPostSchema>) => {
+  const validatedFields = NewPostSchema.safeParse(values);
+  const session = await currentUser();
+
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+
+  if (!validatedFields.success) {
+    return { error: "Invalid inputs provided!" };
+  }
+
+  const { id, title, content } = validatedFields.data;
+
+  // TODO: handle media here
+
+  const post = await prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      userId: session?.id,
+      title: title,
+      content: content,
+    },
+  });
+
+  return { success: "Post updated successfully!", post: post.id };
+};
+
+/**
  * Get all community posts
  */
 export const getAllPosts = async () => {

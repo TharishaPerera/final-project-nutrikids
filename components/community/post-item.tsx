@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Edit, Trash } from "lucide-react";
 import { DeleteDialog } from "@/components/common/delete-dialog";
 import { DeletePost } from "@/actions/community/posts";
 import { toast } from "sonner";
 import { useTransition } from "react";
 import { Loader } from "@/components/common/loader";
+import { cn } from "@/lib/utils";
 
 interface PostItemProps {
   postId: string;
@@ -56,9 +57,15 @@ export const PostItem: React.FC<PostItemProps> = ({
       </Link>
       {actions && (
         <div className="flex flex-col space-y-2">
-          <Button size="icon" variant="secondary" className="rounded-md">
+          <Link
+            className={cn(
+              buttonVariants({ variant: "secondary", size: "icon" }),
+              "rounded-md"
+            )}
+            href={`/community/posts/edit/${postId}`}
+          >
             <Edit className="h-4 w-4" />
-          </Button>
+          </Link>
           <DeleteDialog
             title="Delete your Post"
             onConfirm={handleDelete}
