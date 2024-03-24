@@ -40,6 +40,41 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
 };
 
 /**
+ * Update a post on community
+ * @param values NewPostSchema
+ * @returns message object
+ */
+export const updatePost = async (values: z.infer<typeof NewPostSchema>) => {
+  const validatedFields = NewPostSchema.safeParse(values);
+  const session = await currentUser();
+
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+
+  if (!validatedFields.success) {
+    return { error: "Invalid inputs provided!" };
+  }
+
+  const { id, title, content } = validatedFields.data;
+
+  // TODO: handle media here
+
+  const post = await prisma.post.update({
+    where: {
+      id: id,
+    },
+    data: {
+      userId: session?.id,
+      title: title,
+      content: content,
+    },
+  });
+
+  return { success: "Post updated successfully!", post: post.id };
+};
+
+/**
  * Get all community posts
  */
 export const getAllPosts = async () => {
@@ -101,8 +136,8 @@ export const GetPostById = async (id: string) => {
             select: {
               role: true,
             },
-          }
-        }
+          },
+        },
       },
       comment: {
         orderBy: {
@@ -116,8 +151,8 @@ export const GetPostById = async (id: string) => {
                 select: {
                   role: true,
                 },
-              }
-            }
+              },
+            },
           },
         },
       },
@@ -196,19 +231,43 @@ export const IsCurrentPostSaved = async (id: string) => {
     where: {
       userId: session.id,
       postId: id,
-    }
-  })
+    },
+  });
 
   if (isCurrentPostSaved) {
-    return { saved: true }
+    return { saved: true };
   } else {
-    return { saved: false }
+    return { saved: false };
   }
-}
+};
 
 // TODO: Add MarkPostHelpful
 export const MarkPostHelpful = async (id: string) => {
   if (!id) {
     return { error: "Post id not found!" };
   }
-}
+};
+
+export const DeletePost = async (id: string) => {
+  const session = await currentUser();
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!id) {
+    return { error: "Post id not found!" };
+  }
+
+  try {
+    await prisma.post.delete({
+      where: {
+        id: id,
+        userId: session.id,
+      },
+    });
+
+    return { success: "Post deleted successfully!" };
+  } catch (error) {
+    console.log(error);
+    return { error: "Error occurred when deleting post!" };
+  }
+};
