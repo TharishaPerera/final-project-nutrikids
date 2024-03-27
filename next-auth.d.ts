@@ -5,6 +5,7 @@ export type ExtendedUser = DefaultSession["user"] & {
     role: UserRole
     isTwoFactorEnabled: boolean
     isOAuth: boolean
+    level: UserRole.level
 } 
 
 declare module "next-auth" {

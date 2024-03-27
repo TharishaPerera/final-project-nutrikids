@@ -30,6 +30,13 @@ export const getUserById = async (id: string) => {
       where: {
         id: id,
       },
+      include: {
+        userRole: {
+          select: {
+            level: true,
+          }
+        }
+      }
     });
 
     return user;
