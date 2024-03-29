@@ -8,3 +8,11 @@ export interface UserTableInterface {
   }
   emailVerified?: Date | null;
 }
+
+export interface PediatricianDetailsInterface {
+  pediatricianId: string
+  userId: string
+  qualifications?: string | null | undefined
+  specializations?: string | null | undefined
+  description?: string | null | undefined
+}

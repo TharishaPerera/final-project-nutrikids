@@ -169,14 +169,14 @@ model HealthRecord {
 }
 
 model Pediatrician {
-  pediatricianId   String        @id @default(cuid())
-  userId           String        @unique
-  qualifications   String?
-  speacializations String?
-  description      String?
-  availability     Availabilty[]
-  assistant        Assistant[]
-  appointment      Appointment[]
+  pediatricianId  String        @id @default(cuid())
+  userId          String        @unique
+  qualifications  String?       @db.LongText
+  specializations String?
+  description     String?       @db.LongText
+  availability    Availabilty[]
+  assistant       Assistant[]
+  appointment     Appointment[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
