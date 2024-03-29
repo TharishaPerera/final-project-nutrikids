@@ -1,16 +1,19 @@
-import { PrismaClient } from '@prisma/client'
-import { seedUsers } from './dummy-data/dummy-data';
-const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+import { seedUsers } from "./dummy-data/dummy-data";
+import bcrypt from "bcryptjs";
+
+const prisma = new PrismaClient();
 
 async function main() {
-  await seedUserRole()
-  
-  // await seedUsers()
+  await seedUserRole();
+  await seedDefaultUsers();
+
+  // await seedUsers();
 }
 /**
  * Seed user role data to the UserRole table
  */
-async function seedUserRole () {
+async function seedUserRole() {
   await prisma.userRole.createMany({
     data: [
       {
@@ -37,6 +40,56 @@ async function seedUserRole () {
         id: 10005,
         level: 10000,
         role: "SUPER_ADMIN",
+      },
+    ],
+  });
+}
+
+/**
+ * Seed default users data
+ */
+async function seedDefaultUsers() {
+  await prisma.user.createMany({
+    data: [
+      {
+        name: "Parent User",
+        email: "parent@nutrikids.com",
+        password: await bcrypt.hash("1qaz@WSX", 10),
+        telephone: "+1234567890",
+        emailVerified: "2023-05-12T08:30:00Z",
+        role: 10001,
+      },
+      {
+        name: "Assistant User",
+        email: "assistant@nutrikids.com",
+        password: await bcrypt.hash("1qaz@WSX", 10),
+        telephone: "+1234567890",
+        emailVerified: "2023-05-12T08:30:00Z",
+        role: 10002,
+      },
+      {
+        name: "Consultant User",
+        email: "consultant@nutrikids.com",
+        password: await bcrypt.hash("1qaz@WSX", 10),
+        telephone: "+1234567890",
+        emailVerified: "2023-05-12T08:30:00Z",
+        role: 10003,
+      },
+      {
+        name: "Company Admin",
+        email: "company.admin@nutrikids.com",
+        password: await bcrypt.hash("1qaz@WSX", 10),
+        telephone: "+1234567890",
+        emailVerified: "2023-05-12T08:30:00Z",
+        role: 10004,
+      },
+      {
+        name: "Super Admin",
+        email: "super.admin@nutrikids.com",
+        password: await bcrypt.hash("1qaz@WSX", 10),
+        telephone: "+1234567890",
+        emailVerified: "2023-05-12T08:30:00Z",
+        role: 10005,
       },
     ],
   });
