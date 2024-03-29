@@ -3,6 +3,7 @@
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import {
+  ConsultantSchema,
   PasswordUpdateSchema,
   UserProfileSchema,
 } from "@/schemas/user-profile-schema";
@@ -100,4 +101,72 @@ export const updatePassword = async (
     },
   });
   return { success: "Password details updated successfully!" };
+};
+
+/**
+ * Update consultant details of user profile
+ * @param values ConsultantSchema
+ * @returns object
+ */
+export const updateConsultantDetails = async (
+  values: z.infer<typeof ConsultantSchema>
+) => {
+  const validatedFields = ConsultantSchema.safeParse(values);
+  const session = await currentUser();
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const { specializations, description, qualifications } = validatedFields.data;
+
+  const consultantDetails = await prisma.pediatrician.update({
+    where: {
+      userId: session?.id,
+    },
+    data: {
+      specializations: specializations,
+      description: description,
+      qualifications: qualifications,
+    },
+  });
+
+  return {
+    success: "Pediatrician details updated successfully!",
+    data: consultantDetails,
+  };
+};
+
+/**
+ * Get user details of user profile
+ * @param id string
+ * @returns object
+ */
+export const getUserDetails = async (id: string) => {
+  if (!id) {
+    return { error: "User not found!" };
+  }
+
+  try {
+    const userDetails = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      select: {
+        name: true,
+        image: true,
+        email: true,
+        telephone: true,
+        isPediatrician: true,
+
+        // TODO: include assistant details as well
+        // isAssistant: true,
+      },
+    });
+
+    return { userDetails };
+  } catch (error) {
+    console.log(error);
+    return { error: "Error occurred when retrieving data!" };
+  }
 };

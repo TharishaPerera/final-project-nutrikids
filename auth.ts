@@ -63,6 +63,7 @@ export const {
       }
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
+        session.user.level = token.level as number;
       }
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
@@ -87,6 +88,7 @@ export const {
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
+      token.level = existingUser.userRole.level;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;

@@ -19,13 +19,12 @@ export const showDashboardBtnLinks = [
 ];
 
 export const SideNavLinks = [
-  { label: "Dashboard", href: "/dashboard", user: "user" },
-  { label: "Pediatricians", href: "/pediatricians", user: "user" },
-  { label: "Appointments", href: "/appointments", user: "user" },  
-  { label: "Children", href: "/children", user: "user" },  
-  { label: "History", href: "/history", user: "user" },
-  { label: "Reports", href: "/reports", user: "consultant" },
-  { label: "Users", href: "/users", user: "admin" },
-  { label: "User Roles", href: "/user-roles", user: "admin" },
+  { label: "Dashboard", href: "/dashboard", level: 100 },
+  { label: "Pediatricians", href: "/pediatricians", level: 100 },
+  { label: "Appointments", href: "/appointments", level: 100 },
+  { label: "Children", href: "/children", level: 100 },
+  { label: "History", href: "/history", level: 100 },
+  { label: "Reports", href: "/reports", level: 1000 },
+  { label: "Users", href: "/users", level: 5000 },
+  { label: "User Roles", href: "/user-roles", level: 5000 },
 ];
-
