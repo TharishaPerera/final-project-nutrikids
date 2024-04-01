@@ -170,3 +170,27 @@ export const getUserDetails = async (id: string) => {
     return { error: "Error occurred when retrieving data!" };
   }
 };
+
+/**
+ * Delete user account
+ */
+export const deleteAccount = async () => {
+  const session = await currentUser();
+
+  if (!session) {
+    return { error: "User not found!" };
+  }
+
+  const { id } = session;
+
+  try {
+    await prisma.user.delete({
+      where: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return { error: "Error occurred when deleting account!" };
+  }
+}
