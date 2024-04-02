@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { auth } from "@/auth";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-console.log(session)
+  console.log(session);
   return (
     <SessionProvider session={session}>
       <html lang="en">
@@ -39,7 +40,7 @@ console.log(session)
             disableTransitionOnChange
           >
             <Toaster position="bottom-right" />
-            {children}
+            <EdgeStoreProvider>{children}</EdgeStoreProvider>
           </ThemeProvider>
         </body>
       </html>
