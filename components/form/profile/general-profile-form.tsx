@@ -15,11 +15,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useEdgeStore } from "@/lib/edgestore";
 import { cn, getFirstLetters } from "@/lib/utils";
 import { UserProfileSchema } from "@/schemas/user-profile-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -29,22 +30,45 @@ export const GeneralProfileForm = () => {
   const pathname = usePathname();
   const name = user?.name;
   const email = user?.email;
-  const image = user?.image;
+  const profileImage = user?.image;
   const twoFactor = user?.isTwoFactorEnabled;
   const firstLetters = getFirstLetters(name!);
   const [isPending, startTransition] = React.useTransition();
+
+  const [file, setFile] = useState<File>();
+  const [image, setImage] = useState(profileImage);
+  // const [urls, setUrls] = useState<{
+  //   url: string;
+  //   thumbnailUrl: string | null;
+  // }>();
+  const { edgestore } = useEdgeStore();
 
   const form = useForm<z.infer<typeof UserProfileSchema>>({
     resolver: zodResolver(UserProfileSchema),
     defaultValues: {
       name: name ?? "",
       email: email ?? "",
-      image: "",
+      image: image ?? "",
       twoFactorEnabled: twoFactor ?? false,
     },
   });
 
-  const onSubmit = (values: z.infer<typeof UserProfileSchema>) => {
+  const imgRef = form.register("image");
+
+  const onSubmit = async (values: z.infer<typeof UserProfileSchema>) => {
+    const file: File = values.image[0];
+    // startTransition(async () => {
+    // upload image to edgestore
+    if (values.image) {
+      const res = await edgestore.myPublicImages.upload({
+        file,
+        input: { type: "profile" },
+      });
+      setImage(res.thumbnailUrl);
+      values.image = res.thumbnailUrl;
+    }
+    // });
+
     startTransition(() => {
       updateGeneralDetails(values)
         .then((data) => {
@@ -80,9 +104,14 @@ export const GeneralProfileForm = () => {
                         <Input
                           className="w-full"
                           type="file"
-                          {...field}
+                          {...imgRef}
                           disabled={isPending}
                           placeholder="John Doe"
+                          onChange={(event) => {
+                            field.onChange(
+                              event.target?.files?.[0] ?? undefined
+                            );
+                          }}
                         />
                       </FormControl>
                       <FormMessage />

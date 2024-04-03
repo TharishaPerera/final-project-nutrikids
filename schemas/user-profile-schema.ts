@@ -18,7 +18,12 @@ export const UserProfileSchema = z.object({
     .email({
       message: "Invalid email address!",
     }),
-  image: z.any().optional(),
+  image:
+    typeof window === "undefined"
+      ? z.any()
+      : z.instanceof(FileList, {
+          message: "Profile image should be in file type!",
+        }),
   twoFactorEnabled: z.boolean(),
 });
 
