@@ -117,7 +117,7 @@ export const columns: ColumnDef<UserTableInterface>[] = [
             <CopyIcon className="w-4 h-4" />
           </Button>
           <Link
-            href={`/users/${user.id}`}
+            href={`/users/update/${user.id}`}
             className={cn(
               buttonVariants({ variant: "secondary", size: "icon" }),
               "rounded-full"

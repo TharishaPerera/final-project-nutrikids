@@ -182,12 +182,13 @@ model Pediatrician {
 }
 
 model Availabilty {
-  id             Int    @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   pediatricianId String
-  startTime      String
-  endTime        String
-  location       String
-  dateOfWeek     String
+  hospital       String?
+  location       String?
+  dateOfWeek     String?
+  startTime      String?
+  endTime        String?
 
   pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId], onDelete: Cascade)
 }
