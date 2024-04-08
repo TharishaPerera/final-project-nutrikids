@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 
 interface PediatriciansCardProps {
   id: string;
-  name: string;
-  specialization: string;
-  image: string;
+  name: string | null | undefined;
+  specialization: string | null | undefined;
+  image: string | undefined;
 }
 
 export const PediatriciansCard: React.FC<PediatriciansCardProps> = ({
