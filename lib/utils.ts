@@ -30,10 +30,23 @@ export function getFirstLetters(input?: string): string {
 }
 
 /**
- * 
+ * Format date into 'ddd MMM DD YYYY [at] h:mm A' format
  * @param date Date
  * @returns date formatted as '
  */
 export const dateFormat = (date?: Date) => {
   return moment(date).format('ddd MMM DD YYYY [at] h:mm A').toString();
+}
+
+/**
+ * Truncate text if it is longer than maxLength
+ * @param text string
+ * @param maxLength number
+ * @returns text string
+ */
+export const truncateText = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return `${text.slice(0, maxLength)}...`;
+  }
+  return text;
 }
