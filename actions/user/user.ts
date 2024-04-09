@@ -5,6 +5,7 @@ import { currentUser } from "@/lib/auth";
 import { hashPassword } from "@/lib/encrypt";
 import { getRandomUserImage } from "@/lib/images";
 import prisma from "@/lib/prisma";
+import { sendWelcomeEmail } from "@/lib/smtp";
 import { UserCreateSchema } from "@/schemas/user-schemas";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -95,10 +96,11 @@ export const createUser = async (values: z.infer<typeof UserCreateSchema>) => {
           userId: user.id,
         },
       });
+    }
 
-      if (pediatrician.pediatricianId) {
-        // TODO: send email consultants to login and update their details to be visible in pediatrician section
-      }
+    // send welcome email
+    if (user.email) {
+      await sendWelcomeEmail(user.email);
     }
 
     return { success: "User created successfully!", userId: user.id };

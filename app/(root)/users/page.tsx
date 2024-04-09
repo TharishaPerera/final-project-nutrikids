@@ -55,7 +55,7 @@ const UsersPage = () => {
         </FormDialog>
         {/* <Link href="/users/create" className={cn(buttonVariants({ variant: "default", size: "sm" }))}>New User</Link> */}
       </div>
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} searchPlaceholder="Search emails ..." />
     </div>
   );
 };

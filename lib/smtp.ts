@@ -5,6 +5,7 @@ import handlebars from "handlebars";
 import { TwoFactorCodeTemplate } from "@/components/email-templates/two-factor-code";
 import { ResetPasswordTemplate } from "@/components/email-templates/reset-password";
 import { VerifyEmailTemplate } from "@/components/email-templates/verify-email";
+import { WelcomeEmailTemplate } from "@/components/email-templates/welcome-email";
 
 const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
 const domain = process.env.NEXT_PUBLIC_APP_URL;
@@ -85,5 +86,32 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     });
   } catch (error) {
     console.log("Confirm Email: ", error);
+  }
+};
+
+/**
+ * Send welcome email
+ */
+export const sendWelcomeEmail = async (email: string) => {
+  const signinLink = `${domain}/auth/sign-in`;
+
+  // create template
+  const template = handlebars.compile(WelcomeEmailTemplate);
+  const body = template({
+    email: email,
+    password: process.env.DEFAULT_USER_PASSWORD,
+    supportEmail: process.env.SMTP_EMAIL,
+    signinLink: signinLink,
+  });
+
+  try {
+    await transport.sendMail({
+      from: SMTP_EMAIL,
+      to: email,
+      subject: "Welcome to NutriKids!",
+      html: body,
+    });
+  } catch (error) {
+    console.log("Welcome Email: ", error);
   }
 };
