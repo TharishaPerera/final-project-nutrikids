@@ -48,6 +48,23 @@ export const PasswordUpdateSchema = z
   });
 
 /**
+ * User profile password update form schema
+ */
+export const UpdateUserPasswordSchema = z
+  .object({
+    newPassword: z.string().min(8, {
+      message: "New password should be minimum 8 characters!",
+    }),
+    confirmPassword: z.string().min(8, {
+      message: "Confirm password field is required!",
+    }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords should be identical",
+    path: ["confirmPassword"],
+  });
+
+/**
  * User profile pediatrician details update form schema
  */
 export const ConsultantSchema = z.object({

@@ -40,7 +40,7 @@ export const ConsultantForm = ({
   const onSubmit = (values: z.infer<typeof ConsultantSchema>) => {
     console.log(values);
     startTransition(() => {
-      updateConsultantDetails(values)
+      updateConsultantDetails(values, pediatrician?.userId)
         .then((response) => {
           response.error && toast.error(response.error);
           response.success && toast.success(response.success);

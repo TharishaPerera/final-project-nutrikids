@@ -23,10 +23,13 @@ interface USerData {
  * @returns object
  */
 export const updateGeneralDetails = async (
-  values: z.infer<typeof UserProfileSchema>
+  values: z.infer<typeof UserProfileSchema>,
+  userId?: string
 ) => {
   const validatedFields = UserProfileSchema.safeParse(values);
   const session = await currentUser();
+
+  const updateWhere = userId ?? session?.id;
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
@@ -45,7 +48,7 @@ export const updateGeneralDetails = async (
 
   const user = await prisma.user.update({
     where: {
-      id: session?.id,
+      id: updateWhere,
     },
     data: userData,
   });
@@ -109,10 +112,13 @@ export const updatePassword = async (
  * @returns object
  */
 export const updateConsultantDetails = async (
-  values: z.infer<typeof ConsultantSchema>
+  values: z.infer<typeof ConsultantSchema>,
+  pediatricianId?: string
 ) => {
   const validatedFields = ConsultantSchema.safeParse(values);
   const session = await currentUser();
+
+  const updateWhere = pediatricianId ?? session?.id;
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
@@ -122,7 +128,7 @@ export const updateConsultantDetails = async (
 
   const consultantDetails = await prisma.pediatrician.update({
     where: {
-      userId: session?.id,
+      userId: updateWhere,
     },
     data: {
       specializations: specializations,
