@@ -7,6 +7,7 @@ import { getUserByEmail } from "@/data/user"
 import { generateVerificationToken } from "@/lib/tokens"
 import { sendVerificationEmail } from "@/lib/smtp"
 import { hashPassword } from "@/lib/encrypt"
+import { getRandomUserImage } from "@/lib/images"
 
 /**
  * User registration 
@@ -34,7 +35,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             name: name,
             email: email,
             password: hashedPassword,
-            role: userType == "consultant" ? 10003 : 10001
+            role: userType == "consultant" ? 10003 : 10001,
+            image: getRandomUserImage()
         }
     })
 

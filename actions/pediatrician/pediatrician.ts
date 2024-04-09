@@ -28,6 +28,11 @@ export const getAllPediatricians = async () => {
                     telephone: true,
                 }
             }
+        },
+        where: {
+            specializations: { not: null },
+            description: { not: null },
+            qualifications: { not: null },
         }
     });
 
