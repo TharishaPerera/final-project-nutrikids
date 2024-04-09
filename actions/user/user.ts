@@ -7,6 +7,7 @@ import { getRandomUserImage } from "@/lib/images";
 import prisma from "@/lib/prisma";
 import { sendWelcomeEmail } from "@/lib/smtp";
 import { UserCreateSchema } from "@/schemas/user-schemas";
+import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -104,8 +105,11 @@ export const createUser = async (values: z.infer<typeof UserCreateSchema>) => {
     }
 
     return { success: "User created successfully!", userId: user.id };
-  } catch (error) {
+  } catch (error: Prisma.PrismaClientKnownRequestError | Error | any) {
     console.log(error);
+    if (error.code === "P2002") { // unique constraint violation
+      return { error: "Email already exists!" };
+    }
     return { error: "Error occurred when retrieving data!" };
   }
 };
