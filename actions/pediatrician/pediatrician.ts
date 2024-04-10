@@ -75,11 +75,64 @@ export const getPediatricianDetailsById = async (pediatricianId: string) => {
                     location: true,
                     dateOfWeek: true,
                     hospital: true
+                },
+                orderBy: {
+                    hospital: "asc"
                 }
             }
         },
         where: {
             pediatricianId: pediatricianId
+        }
+    });
+
+    return { pediatrician }
+}
+
+/**
+ * Find pediatrician details by user id
+ * @param userId string
+ * @returns pediatrician 
+ */
+export const getPediatricianDetailsByUserId = async (userId: string) => {
+    const session = await currentUser();
+    if (!session || !session.id) {
+      redirect("/sign-in")
+    }
+
+    if (!userId) {
+        return { error: "User id not found!" };
+    }
+
+    const pediatrician: OnePediatricianDetailsInterface | null | undefined = await prisma.pediatrician.findFirst({
+        select: {
+            pediatricianId: true,
+            specializations: true,
+            description: true,
+            qualifications: true,
+            user: {
+                select: {
+                    name: true,
+                    image: true,
+                    email: true,
+                    telephone: true,
+                }
+            },
+            availability: {
+                select: {
+                    startTime: true,
+                    endTime: true,
+                    location: true,
+                    dateOfWeek: true,
+                    hospital: true
+                },
+                orderBy: {
+                    hospital: "asc"
+                }
+            }
+        },
+        where: {
+            userId: userId
         }
     });
 
