@@ -15,7 +15,7 @@ const SideNav = () => {
   return (
     <div className="space-y-3 mr-2">
       {SideNavLinks.map((link) => {
-        if (userLevel >= link.level) {
+        if (link.level.includes(userLevel)) {
           return (
             <Link
               key={link.href}

@@ -38,7 +38,6 @@ export const ConsultantForm = ({
   });
 
   const onSubmit = (values: z.infer<typeof ConsultantSchema>) => {
-    console.log(values);
     startTransition(() => {
       updateConsultantDetails(values)
         .then((response) => {
