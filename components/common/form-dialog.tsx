@@ -13,18 +13,20 @@ interface FormDialogProps {
   title: string;
   description?: string;
   form: React.ReactNode;
+  className?: string;
 }
 
 export const FormDialog: React.FC<FormDialogProps> = ({
   children,
   title,
   description,
-  form
+  form,
+  className,
 }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className={className}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}

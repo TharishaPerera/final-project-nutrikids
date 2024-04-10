@@ -119,11 +119,11 @@ const PediatricianPage = () => {
                   {data.availability &&
                     data.availability.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell>{item.hospital}</TableCell>
-                        <TableCell>{item.location}</TableCell>
+                        <TableCell className="capitalize">{item.hospital}</TableCell>
+                        <TableCell className="capitalize">{item.location}</TableCell>
                         <TableCell>{item.startTime}</TableCell>
                         <TableCell>{item.endTime}</TableCell>
-                        <TableCell>{item.dateOfWeek}</TableCell>
+                        <TableCell className="capitalize">{item.dateOfWeek}</TableCell>
                       </TableRow>
                     ))}
                 </TableBody>

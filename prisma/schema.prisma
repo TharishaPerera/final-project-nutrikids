@@ -174,14 +174,14 @@ model Pediatrician {
   qualifications  String?       @db.LongText
   specializations String?
   description     String?       @db.LongText
-  availability    Availabilty[]
+  availability    Availability[]
   assistant       Assistant[]
   appointment     Appointment[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Availabilty {
+model Availability {
   id             Int     @id @default(autoincrement())
   pediatricianId String
   hospital       String?
