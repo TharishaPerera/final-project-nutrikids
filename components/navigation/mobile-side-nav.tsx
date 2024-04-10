@@ -32,7 +32,7 @@ const MobileSideNav = () => {
           </SheetHeader>
           <div className="py-6 space-y-3">
             {SideNavLinks.map((link) => {
-              if (userLevel >= link.level) {
+              if (link.level.includes(userLevel)) {
                 return (
                   <Link
                     key={link.href}
