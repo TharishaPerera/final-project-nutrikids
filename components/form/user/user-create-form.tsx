@@ -50,15 +50,13 @@ export const UserCreateForm = () => {
             toast.success(response.success);
             userId = response.userId
             form.reset();
+            router.push(`/users/update/${userId}`);
           }
         })
         .catch((error) => {
           console.error(error);
           toast.error("Something went wrong. Please try again later!");
         })
-        .finally(() => {
-          router.push(`/users/update/${userId}`);
-        });
     });
   };
 
