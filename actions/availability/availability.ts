@@ -63,7 +63,7 @@ export const getAllAvailabilitiesByPediatrician = async () => {
 
         // get pediatrician details
         const pediatrician = await getPediatricianDetailsByUserId(session.id)
-        if (!pediatrician) {
+        if (!pediatrician.pediatrician) {
             return { error: "current user is not a pediatrician!" };
         }
 
