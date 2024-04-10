@@ -22,7 +22,7 @@ export const SideNavLinks = [
   { label: "Dashboard", href: "/dashboard", level: [100,500,1000,5000,10000] },           // ALL USERS
   { label: "Pediatricians", href: "/pediatricians", level: [100,500,1000,5000,10000] },   // ALL USERS
   { label: "Appointments", href: "/appointments", level: [100,500,1000,5000,10000] },     // ALL USERS
-  { label: "Children", href: "/children", level: [100,500,1000,5000,10000] },             // ALL USERS
+  { label: "My Children", href: "/children", level: [100,500,1000,5000,10000] },          // ALL USERS
   { label: "History", href: "/history", level: [100,500,1000,5000,10000] },               // ALL USERS
   { label: "My Availability", href: "/availability", level: [1000] },                     // CONSULTANT
   { label: "Reports", href: "/reports", level: [1000,5000,10000] },                       // CONSULTANT AND ABOVE
