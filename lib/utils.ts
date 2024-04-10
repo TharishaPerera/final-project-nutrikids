@@ -34,7 +34,10 @@ export function getFirstLetters(input?: string): string {
  * @param date Date
  * @returns date formatted as '
  */
-export const dateFormat = (date?: Date) => {
+export const dateFormat = (date?: Date, format?: string) => {
+  if (format) {
+    return moment(date).format(format).toString();
+  }
   return moment(date).format('ddd MMM DD YYYY [at] h:mm A').toString();
 }
 

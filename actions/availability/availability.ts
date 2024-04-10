@@ -43,7 +43,7 @@ export const createAvailability = async (values: z.infer<typeof AvailabilityForm
             }
         })
 
-        return { success: "Availability created successfully!", availability: availability.id };
+        return { success: "Availability created successfully!" };
     } catch (error: Prisma.PrismaClientKnownRequestError | Error | any) {
         console.log(error);
         return { error: "Error occurred when creating availability!" };
