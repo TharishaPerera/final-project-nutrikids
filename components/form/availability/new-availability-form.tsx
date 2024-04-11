@@ -68,7 +68,7 @@ export const NewAvailabilityForm = () => {
                     <Input
                       {...field}
                       type="text"
-                      placeholder="Hospital Name"
+                      placeholder="Hospital Name / Online"
                       disabled={isPending}
                     />
                   </FormControl>
@@ -85,7 +85,7 @@ export const NewAvailabilityForm = () => {
                     <Input
                       {...field}
                       type="text"
-                      placeholder="Location"
+                      placeholder="Location / Online"
                       disabled={isPending}
                     />
                   </FormControl>

@@ -9,6 +9,7 @@ export const NewPostSchema = z.object({
   content: z
     .string()
     .min(10, { message: "Post content should be more than 10 characters!" }),
+  media: z.string().optional(),
 });
 
 /**

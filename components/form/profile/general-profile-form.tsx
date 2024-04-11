@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useEdgeStore } from "@/lib/edgestore";
@@ -36,6 +37,7 @@ export const GeneralProfileForm = () => {
   const [isPending, startTransition] = React.useTransition();
 
   const [file, setFile] = useState<File>();
+  const [progress, setProgress] = useState(0);
   const [image, setImage] = useState(profileImage);
   // const [urls, setUrls] = useState<{
   //   url: string;
@@ -63,6 +65,9 @@ export const GeneralProfileForm = () => {
       const res = await edgestore.myPublicImages.upload({
         file,
         input: { type: "profile" },
+        onProgressChange: (progress) => {
+          setProgress(progress);
+        },
       });
       setImage(res.thumbnailUrl);
       values.image = res.thumbnailUrl;
@@ -94,7 +99,7 @@ export const GeneralProfileForm = () => {
                   </AvatarFallback>
                 </Avatar>
               </div>
-              <div className="w-full">
+              <div className="w-full block space-y-2">
                 <FormField
                   control={form.control}
                   name="image"
@@ -118,6 +123,9 @@ export const GeneralProfileForm = () => {
                     </FormItem>
                   )}
                 />
+                {progress > 0 && progress != 100 && (
+                  <Progress className="h-1" value={progress} />
+                )}
               </div>
             </div>
             <div className="space-y-4">
@@ -129,7 +137,9 @@ export const GeneralProfileForm = () => {
                     <FormControl>
                       <Input
                         {...field}
-                        disabled={isPending}
+                        disabled={
+                          isPending || (progress > 0 && progress != 100)
+                        }
                         placeholder="John Doe"
                       />
                     </FormControl>
@@ -168,7 +178,11 @@ export const GeneralProfileForm = () => {
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
-                        disabled={isPending || user?.isOAuth}
+                        disabled={
+                          isPending ||
+                          user?.isOAuth ||
+                          (progress > 0 && progress != 100)
+                        }
                       />
                     </FormControl>
                   </FormItem>
@@ -176,7 +190,10 @@ export const GeneralProfileForm = () => {
               />
             </div>
             <div className="w-full flex justify-end">
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                disabled={isPending || (progress > 0 && progress != 100)}
+              >
                 Update
               </Button>
             </div>
