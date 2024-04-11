@@ -74,8 +74,7 @@ export const PostItem: React.FC<PostItemProps> = ({
           >
             <Button
               size="icon"
-              variant="secondary"
-              className="bg-red-300 dark:bg-red-800 text-secondary-foreground hover:bg-red-500 dark:hover:bg-red-500"
+              variant="destructive"
             >
               <Trash className="h-4 w-4" />
             </Button>

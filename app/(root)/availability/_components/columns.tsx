@@ -104,7 +104,7 @@ export const columns: ColumnDef<Availability>[] = [
             description="Are you sure you want to delete your availability record?"
             variant="destructive"
           >
-            <Button size="icon" variant="secondary" className="rounded-full">
+            <Button size="icon" variant="destructive" className="rounded-full">
               <Trash className="w-4 h-4" />
             </Button>
           </DeleteDialog>

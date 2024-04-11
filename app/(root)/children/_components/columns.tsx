@@ -97,7 +97,7 @@ export const columns: ColumnDef<Child>[] = [
             description="Are you sure you want to remove your child?"
             variant="destructive"
           >
-            <Button size="icon" variant="secondary" className="rounded-full">
+            <Button size="icon" variant="destructive" className="rounded-full">
               <Trash className="w-4 h-4" />
             </Button>
           </DeleteDialog>
