@@ -112,7 +112,7 @@ export const NewPostForm: React.FC<NewPostFormProps> = ({
                     <FormControl>
                       <Textarea
                         placeholder="What's on your mind?"
-                        className="resize-none"
+                        // className="resize-none"
                         disabled={isPending}
                         {...field}
                       />
