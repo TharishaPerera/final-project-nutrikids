@@ -24,15 +24,14 @@ export const createPost = async (values: z.infer<typeof NewPostSchema>) => {
     return { error: "Invalid inputs provided!" };
   }
 
-  const { title, content } = validatedFields.data;
-
-  // TODO: handle media here
+  const { title, content, media } = validatedFields.data;
 
   const post = await prisma.post.create({
     data: {
       userId: session?.id,
       title: title,
       content: content,
+      media: media,
     },
   });
 
@@ -56,9 +55,7 @@ export const updatePost = async (values: z.infer<typeof NewPostSchema>) => {
     return { error: "Invalid inputs provided!" };
   }
 
-  const { id, title, content } = validatedFields.data;
-
-  // TODO: handle media here
+  const { id, title, content, media } = validatedFields.data;
 
   const post = await prisma.post.update({
     where: {
@@ -68,6 +65,7 @@ export const updatePost = async (values: z.infer<typeof NewPostSchema>) => {
       userId: session?.id,
       title: title,
       content: content,
+      media: media,
     },
   });
 

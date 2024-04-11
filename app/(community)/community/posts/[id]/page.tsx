@@ -132,6 +132,18 @@ const PostPage = () => {
           </ToolTip>
         </div>
       </div>
+      {data.media && (
+        <div className="w-full">
+          <AspectRatio ratio={21 / 9}>
+            <Image
+              src={data.media}
+              alt="Image"
+              fill={true}
+              className="rounded-md object-cover"
+            />
+          </AspectRatio>
+        </div>
+      )}
       <div>
         <div className="text-md">
           {data?.content!.split("\n").map((line, index) => (
@@ -141,16 +153,6 @@ const PostPage = () => {
             </React.Fragment>
           ))}
         </div>
-        {/* <div className="w-full">
-          <AspectRatio ratio={21 / 9}>
-            <Image
-              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
-              alt="Image"
-              fill={true}
-              className="rounded-md object-cover"
-            />
-          </AspectRatio>
-        </div> */}
       </div>
       <div className="border rounded-lg p-2 flex justify-between items-center">
         <div className="flex space-x-2">
