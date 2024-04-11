@@ -6,6 +6,9 @@ import { Edit, ArrowUpDown, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Child } from "@prisma/client";
 import { dateFormat } from "@/lib/utils";
+import { DeleteDialog } from "@/components/common/delete-dialog";
+import { removeChild } from "@/actions/children/children";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<Child>[] = [
   {
@@ -36,23 +39,42 @@ export const columns: ColumnDef<Child>[] = [
       );
     },
     cell: ({ row }) => {
-      return <span className="capitalize">{dateFormat(row.original.dateOfBirth, 'dddd, MMMM D, YYYY')}</span>
+      return (
+        <span className="capitalize">
+          {dateFormat(row.original.dateOfBirth, "dddd, MMMM D, YYYY")}
+        </span>
+      );
     },
   },
   {
     accessorKey: "gender",
     header: "Gender",
     cell: ({ row }) => {
-      return <span className="capitalize">{row.original.gender}</span>
+      return <span className="capitalize">{row.original.gender}</span>;
     },
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const availability = row.original;
+      const childId = row.original.id;
       const handleDelete = () => {
-        // TODO:
+        console.log(childId);
+        removeChild(childId)
+          .then((response) => {
+            if (response.error) {
+              toast.error(response.error);
+            } else {
+              toast.success(response.success);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("Something went wrong. Please try again later!");
+          })
+          .finally(() => {
+            window.location.reload();
+          });
       };
 
       const handleEdit = () => {
@@ -69,14 +91,16 @@ export const columns: ColumnDef<Child>[] = [
           >
             <Edit className="w-4 h-4" />
           </Button>
-          <Button
-            onClick={handleDelete}
-            size="icon"
-            variant="secondary"
-            className="rounded-full"
+          <DeleteDialog
+            title="Remove child from the system"
+            onConfirm={handleDelete}
+            description="Are you sure you want to remove your child?"
+            variant="destructive"
           >
-            <Trash className="w-4 h-4" />
-          </Button>
+            <Button size="icon" variant="secondary" className="rounded-full">
+              <Trash className="w-4 h-4" />
+            </Button>
+          </DeleteDialog>
         </div>
       );
     },
