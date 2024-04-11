@@ -130,6 +130,7 @@ export const NewPostForm: React.FC<NewPostFormProps> = ({
                   <FormItem>
                     <FormControl>
                       <Textarea
+                        rows={10}
                         placeholder="What's on your mind?"
                         // className="resize-none"
                         disabled={isPending || isLoading}

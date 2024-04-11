@@ -30,7 +30,7 @@ export const CommunityPost: React.FC<CommunityPostProps> = ({
 }) => {
   return (
     <Link href={`/community/posts/${id}`}>
-      <div className="border rounded-lg p-4 space-y-4">
+      <div className="border rounded-lg p-4 space-y-4 bg-secondary/30">
         <div className="flex justify-between">
           <div>
             <h1 className="text-sm font-medium capitalize">{name}</h1>
@@ -38,7 +38,7 @@ export const CommunityPost: React.FC<CommunityPostProps> = ({
           </div>
           <Badge
             variant="outline"
-            className="rounded-xl px-4 py-1 text-xs uppercase"
+            className="rounded-xl px-4 py-1 text-xs uppercase bg-secondary"
           >
             {role}
           </Badge>
@@ -47,7 +47,6 @@ export const CommunityPost: React.FC<CommunityPostProps> = ({
         <div>
           <h1 className="text-md md:text-lg font-medium">{title}</h1>
           <div className="text-sm md:text-md font-normal line-clamp-4">{content}</div>
-          {/* Image / Video handle use shadcn's aspect ratio*/}
         </div>
         <Separator />
         <div className="flex justify-between">
