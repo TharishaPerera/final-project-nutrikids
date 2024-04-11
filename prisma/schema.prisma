@@ -169,11 +169,11 @@ model HealthRecord {
 }
 
 model Pediatrician {
-  pediatricianId  String        @id @default(cuid())
-  userId          String        @unique
-  qualifications  String?       @db.LongText
+  pediatricianId  String         @id @default(cuid())
+  userId          String         @unique
+  qualifications  String?        @db.LongText
   specializations String?
-  description     String?       @db.LongText
+  description     String?        @db.LongText
   availability    Availability[]
   assistant       Assistant[]
   appointment     Appointment[]
@@ -252,6 +252,7 @@ model Appointment {
   parentId        String
   appointmentDate DateTime
   timeslot        String
+  appointmentLink String?
   additionalNotes String?
   status          AppointmentStatus @default(SCHEDULED)
   payment         Payment?

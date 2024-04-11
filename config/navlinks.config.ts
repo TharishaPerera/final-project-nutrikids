@@ -23,8 +23,8 @@ export const SideNavLinks = [
   { label: "Pediatricians", href: "/pediatricians", level: [100,500,1000,5000,10000] },   // ALL USERS
   { label: "Appointments", href: "/appointments", level: [100,500,1000,5000,10000] },     // ALL USERS
   { label: "My Children", href: "/children", level: [100,500,1000,5000,10000] },          // ALL USERS
-  { label: "History", href: "/history", level: [100,500,1000,5000,10000] },               // ALL USERS
-  { label: "My Availability", href: "/availability", level: [1000] },                     // CONSULTANT
+  { label: "History", href: "/history", level: [100,500,10000] },                         // PARENT, CONSULTANT AND SUPER ADMIN
+  { label: "My Availability", href: "/availability", level: [1000,10000] },               // CONSULTANT AND SUPER ADMIN
   { label: "Reports", href: "/reports", level: [1000,5000,10000] },                       // CONSULTANT AND ABOVE
   { label: "Users", href: "/users", level: [5000,10000] },                                // COMPANY ADMIN AND ABOVE
   { label: "User Roles", href: "/user-roles", level: [10000] },                           // SUPER ADMIN
