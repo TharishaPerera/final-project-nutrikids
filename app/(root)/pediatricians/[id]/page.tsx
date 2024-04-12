@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { OnePediatricianDetailsInterface } from "@/interfaces/user-interfaces/user-interfaces";
 import { Loader } from "@/components/common/loader";
 import { FormDialog } from "@/components/common/form-dialog";
-import { UserCreateForm } from "@/components/form/user/user-create-form";
+import { NewAppointmentForm } from "@/components/form/pediatrician/new-appointment-form";
 
 const PediatricianPage = () => {
   const router = useRouter();
@@ -78,8 +78,9 @@ const PediatricianPage = () => {
 
             <FormDialog
               title="Book Online Appointment"
-              description="Book an online appointment with the pediatrician"
-              form={<UserCreateForm />}
+              description="Please note: an online appointment duration is 20 minutes"
+              form={<NewAppointmentForm />}
+              className="max-w-2xl"
             >
               <Button className="w-full">Book Appointment</Button>
             </FormDialog>
