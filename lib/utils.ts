@@ -53,3 +53,13 @@ export const truncateText = (text: string, maxLength: number) => {
   }
   return text;
 }
+
+/**
+ * Convert date time to unix timestamp
+ * @param dateTime Date
+ * @returns unix timestamp
+ */
+export const dateTimeToUnixTimestamp = (dateTime: Date) => {
+  const millisecondsSinceEpoch = dateTime.getTime();
+  return Math.floor(millisecondsSinceEpoch / 1000);
+}
