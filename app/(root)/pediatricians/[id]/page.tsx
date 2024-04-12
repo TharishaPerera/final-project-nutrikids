@@ -22,6 +22,7 @@ import { FormDialog } from "@/components/common/form-dialog";
 import { NewAppointmentForm } from "@/components/form/pediatrician/new-appointment-form";
 
 const PediatricianPage = () => {
+  const timeslotDuration = process.env.TIMESLOT_DURATION
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -78,7 +79,7 @@ const PediatricianPage = () => {
 
             <FormDialog
               title="Book Online Appointment"
-              description="Please note: an online appointment duration is 20 minutes"
+              description={`Please note: an online appointment duration is ${timeslotDuration ?? 20} minutes`}
               form={<NewAppointmentForm />}
               className="max-w-2xl"
             >
