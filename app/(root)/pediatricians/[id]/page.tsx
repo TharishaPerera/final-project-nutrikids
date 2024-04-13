@@ -18,8 +18,11 @@ import { getPediatricianDetailsById } from "@/actions/pediatrician/pediatrician"
 import { toast } from "sonner";
 import { OnePediatricianDetailsInterface } from "@/interfaces/user-interfaces/user-interfaces";
 import { Loader } from "@/components/common/loader";
+import { FormDialog } from "@/components/common/form-dialog";
+import { NewAppointmentForm } from "@/components/form/pediatrician/new-appointment-form";
 
 const PediatricianPage = () => {
+  const timeslotDuration = process.env.TIMESLOT_DURATION
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -73,7 +76,15 @@ const PediatricianPage = () => {
           </div>
           <div className="w-full space-y-3">
             <Button className="w-full">Chat</Button>
-            <Button className="w-full">Book Appointment</Button>
+
+            <FormDialog
+              title="Book Online Appointment"
+              description={`Please note: an online appointment duration is ${timeslotDuration ?? 20} minutes`}
+              form={<NewAppointmentForm />}
+              className="max-w-2xl"
+            >
+              <Button className="w-full">Book Appointment</Button>
+            </FormDialog>
           </div>
         </div>
         <div className="lg:w-3/4 w-full order-2 space-y-4">
@@ -119,11 +130,17 @@ const PediatricianPage = () => {
                   {data.availability &&
                     data.availability.map((item, index) => (
                       <TableRow key={index}>
-                        <TableCell className="capitalize">{item.hospital}</TableCell>
-                        <TableCell className="capitalize">{item.location}</TableCell>
+                        <TableCell className="capitalize">
+                          {item.hospital}
+                        </TableCell>
+                        <TableCell className="capitalize">
+                          {item.location}
+                        </TableCell>
                         <TableCell>{item.startTime}</TableCell>
                         <TableCell>{item.endTime}</TableCell>
-                        <TableCell className="capitalize">{item.dateOfWeek}</TableCell>
+                        <TableCell className="capitalize">
+                          {item.dateOfWeek}
+                        </TableCell>
                       </TableRow>
                     ))}
                 </TableBody>

@@ -38,6 +38,7 @@ interface DataTableProps<TData, TValue> {
   pageSize?: number;
   searchPlaceholder?: string;
   searchKey?: string;
+  searchEnabled?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -45,7 +46,8 @@ export function DataTable<TData, TValue>({
   data,
   pageSize = 6,
   searchPlaceholder = "Search...",
-  searchKey = "email"
+  searchKey = "email",
+  searchEnabled = true,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -80,14 +82,18 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4 space-x-2">
-        <Input
-          placeholder={searchPlaceholder ?? "Search..."}
-          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(searchKey)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {searchEnabled && (
+          <Input
+            placeholder={searchPlaceholder ?? "Search..."}
+            value={
+              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(searchKey)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="ml-auto">
