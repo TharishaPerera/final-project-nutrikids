@@ -1,5 +1,6 @@
 "use client";
 
+import { createOnlineAppointment } from "@/actions/appointment/appointment";
 import { getMyChildren } from "@/actions/children/children";
 import { getTimeSlotsByDay } from "@/actions/pediatrician/pediatrician";
 import { Loader } from "@/components/common/loader";
@@ -25,7 +26,7 @@ import { AppointmentSchema } from "@/schemas/appointment-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Child } from "@prisma/client";
 import { getDay } from "date-fns";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -38,6 +39,7 @@ interface TimeSlotInterface {
 }
 
 export const NewAppointmentForm = () => {
+  const router = useRouter();
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
@@ -101,7 +103,22 @@ export const NewAppointmentForm = () => {
         values.date = new Date();
         setDate(values.date);
       }
-      console.log(values);
+      createOnlineAppointment(values, pediatricianId)
+      .then((response) => {
+        if (response.error) {
+          console.error(response.error)
+          toast.error(response.error);
+        }
+        if (response.success) {
+          toast.success(response.success);
+          form.reset();
+          router.push('/appointments')
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Something went wrong. Please try again later!");
+      })
     });
   };
 
@@ -182,7 +199,7 @@ export const NewAppointmentForm = () => {
                         {timeslots.map((timeslot) => (
                           <SelectItem
                             key={timeslot.startTimeUnix}
-                            value={timeslot.startTimeUnix.toString()}
+                            value={`${timeslot.startTimeUnix.toString()}-${timeslot.endTimeUnix.toString()}`}
                           >
                             {timeslot.timeslot}
                           </SelectItem>

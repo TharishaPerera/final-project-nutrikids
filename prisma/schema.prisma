@@ -34,6 +34,13 @@ enum AppointmentStatus {
   RESCHEDULED
 }
 
+enum MeetingStatus {
+  CREATED
+  COMPLETED
+  CANCELED
+  EXPIRED
+}
+
 enum PaymentMethod {
   CASH
   CARD
@@ -252,7 +259,7 @@ model Appointment {
   parentId        String
   appointmentDate DateTime
   timeslot        String
-  appointmentLink String?
+  meetingId       String           @unique
   additionalNotes String?
   status          AppointmentStatus @default(SCHEDULED)
   payment         Payment?
@@ -260,6 +267,7 @@ model Appointment {
   pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId])
   child        Child        @relation(fields: [childId], references: [id])
   parent       User         @relation(fields: [parentId], references: [id])
+  meeting      DailyMeeting @relation(fields: [meetingId], references: [id])
 }
 
 model Payment {
@@ -295,4 +303,17 @@ model SubscriptionPlan {
   duration    String
 
   subscription Subscription?
+}
+
+model DailyMeeting {
+  id          String        @id
+  name        String        @unique
+  startTime   DateTime      @unique
+  endTime     DateTime      @unique
+  privacy     String
+  url         String
+  createdAt   DateTime
+  config      Json
+  status      MeetingStatus @default(CREATED)
+  appointment Appointment?
 }

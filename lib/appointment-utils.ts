@@ -92,3 +92,13 @@ export const generateTimeSlots = (
 
   return timeSlots;
 };
+
+/**
+ * Generate a unique string based on the unix timestamp
+ * @param timestamp number
+ * @returns unique string
+ */
+export const generateUniqueString = (timestamp: number): string => {
+  const randomString = Math.random().toString(36).substring(2);
+  return `${timestamp.toString()}${randomString}`;
+}
