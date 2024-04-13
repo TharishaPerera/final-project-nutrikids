@@ -132,3 +132,26 @@ const formatDate = (date: Date): string => {
 
   return formattedTime;
 }
+
+/**
+ * Convert any date string to Sri Lankan date time
+ * @param dateString string
+ * @returns LK time string
+ */
+export const convertToLKTime = (dateString: string): string => {
+  const date = new Date(dateString);
+
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Colombo", // Sri Lanka time zone
+    weekday: 'short', // Shortened weekday name
+    year: 'numeric', // Full year
+    month: 'short', // Shortened month name
+    day: '2-digit', // Two-digit day
+    hour: '2-digit', // Two-digit hour
+    minute: '2-digit', // Two-digit minute
+    second: '2-digit' // Two-digit second
+  };
+
+  // Convert the date to Sri Lankan time and format it accordingly
+  return date.toLocaleString('en-US', options);
+}
