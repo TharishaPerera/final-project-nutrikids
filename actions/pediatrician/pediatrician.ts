@@ -176,7 +176,7 @@ export const getTimeSlotsByDay = async (date: Date, pediatricianId: string) => {
         endTime: true,
       },
       where: {
-        dateOfWeek: getFullDay(date.getDay() + 1)?.toLowerCase(),
+        dateOfWeek: getFullDay(date.getDay())?.toLowerCase(),
         pediatricianId: pediatricianId,
         location: "online",
       },
