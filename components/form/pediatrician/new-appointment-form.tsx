@@ -81,8 +81,7 @@ export const NewAppointmentForm = () => {
       toast.info("Please select a date to get time slots!");
     } else {
       startTransition(() => {
-        console.log(date)
-        getTimeSlotsByDay(date, pediatricianId)
+        getTimeSlotsByDay(new Date(convertToLKTime(date.toString())), pediatricianId)
           .then((response) => {
             if (response.error) {
               toast.error(response.error);
