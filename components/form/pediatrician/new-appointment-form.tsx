@@ -43,9 +43,8 @@ export const NewAppointmentForm = () => {
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
-  const today = new Date();
 
-  const [date, setDate] = useState<Date | undefined>(new Date(today.toLocaleString('en-US', { timeZone: process.env.TZ })));
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
   const [children, setChildren] = useState<Child[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -140,7 +139,7 @@ export const NewAppointmentForm = () => {
               selected={date}
               onSelect={(date) => {
                 getTimeSlots(date);
-                setDate(new Date(date?.toLocaleString('en-US', { timeZone: process.env.TZ })!));
+                setDate(date);
               }}
               disabled={(date) =>
                 date < new Date(new Date().setDate(new Date().getDate() - 1))
