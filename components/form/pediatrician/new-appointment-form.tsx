@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { convertToLKTime } from "@/lib/appointment-utils";
 import { AppointmentSchema } from "@/schemas/appointment-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Child } from "@prisma/client";
@@ -44,9 +43,8 @@ export const NewAppointmentForm = () => {
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
-  const today = new Date();
 
-  const [date, setDate] = useState<Date | undefined>(new Date(convertToLKTime(today.toString())));
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
   const [children, setChildren] = useState<Child[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -81,7 +79,7 @@ export const NewAppointmentForm = () => {
       toast.info("Please select a date to get time slots!");
     } else {
       startTransition(() => {
-        getTimeSlotsByDay(new Date(convertToLKTime(date.toString())), pediatricianId)
+        getTimeSlotsByDay(date, pediatricianId)
           .then((response) => {
             if (response.error) {
               toast.error(response.error);
@@ -166,6 +164,12 @@ export const NewAppointmentForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
+                      {!children ||
+                          (children.length === 0 && (
+                            <SelectItem value="notfound" disabled>
+                              No children found in the system
+                            </SelectItem>
+                          ))}
                         {children.map((child) => (
                           <SelectItem key={child.id} value={child.id}>
                             {child.name}
@@ -194,7 +198,7 @@ export const NewAppointmentForm = () => {
                       <SelectContent>
                         {!timeslots ||
                           (timeslots.length === 0 && (
-                            <SelectItem value="notimeslots">
+                            <SelectItem value="notfound" disabled>
                               No time slots available
                             </SelectItem>
                           ))}
