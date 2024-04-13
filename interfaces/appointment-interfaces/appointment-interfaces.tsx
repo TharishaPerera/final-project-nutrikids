@@ -1,3 +1,4 @@
+import { AppointmentStatus, MeetingStatus } from "@prisma/client";
 
 // Create meeting interface
 export interface MeetingInterface {
@@ -23,5 +24,30 @@ export interface MeetingResponseInterface {
       eject_at_room_exp: boolean;
       enable_prejoin_ui: boolean;
       enable_noise_cancellation_ui: boolean;
+  };
+}
+
+export interface MyAppointmentsInterface {
+  id: string;
+  additionalNotes?: string | null;
+  appointmentDate: Date;
+  timeslot: string;
+  status: string;
+  pediatrician: {
+    pediatricianId: string;
+    user: {
+      name?: string | null;
+      email?: string | null;
+    }
+    specializations?: string | null;
+  };
+  child?: {
+    name: string;
+  };
+  meeting: {
+    id: string;
+    name: string;
+    url: string;
+    status: string;
   };
 }

@@ -102,3 +102,33 @@ export const generateUniqueString = (timestamp: number): string => {
   const randomString = Math.random().toString(36).substring(2);
   return `${timestamp.toString()}${randomString}`;
 }
+
+/**
+ * Convert unix timestamp range to human readable format
+ * @param timestampString string (ex: 1713148200000-1713149400000)
+ * @returns string (ex: 11:30 AM - 11:40 AM)
+ */
+export const formatUnixTimestampRange = (timestampString: string): string => {
+  const [startTimestamp, endTimestamp] = timestampString.split('-').map(Number);
+  const startDate = new Date(startTimestamp);
+  const endDate = new Date(endTimestamp);
+
+  // Format start and end times
+  const startTime = formatDate(startDate);
+  const endTime = formatDate(endDate);
+
+  return `${startTime} - ${endTime}`;
+}
+
+const formatDate = (date: Date): string => {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // Handle midnight
+
+  const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+
+  return formattedTime;
+}
