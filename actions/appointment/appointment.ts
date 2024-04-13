@@ -33,6 +33,19 @@ export const createOnlineAppointment = async (
     const { child, date, timeSlot, notes } = validatedFields.data;
     const [startTime, endTime] = timeSlot.split("-");
 
+    // create appointment
+    const appointment = await prisma.appointment.create({
+      data: {
+        pediatricianId: pediatricianId,
+        childId: child,
+        parentId: session.id,
+        appointmentDate: date!,
+        timeslot: timeSlot,
+        additionalNotes: notes,
+        status: "SCHEDULED",
+      },
+    });
+
     // create data object for meeting creation
     const meetingData: MeetingInterface = {
       name: generateUniqueString(parseInt(startTime)),
@@ -52,6 +65,7 @@ export const createOnlineAppointment = async (
     const meeting = await prisma.dailyMeeting.create({
       data: {
         id: dailyMeeting.meetingData?.id!,
+        appointmentId: appointment.id,
         name: dailyMeeting.meetingData?.name!,
         startTime: new Date(dailyMeeting.meetingData?.config.nbf!),
         endTime: new Date(dailyMeeting.meetingData?.config.exp!),
@@ -60,21 +74,6 @@ export const createOnlineAppointment = async (
         createdAt: dailyMeeting.meetingData?.created_at!,
         config: JSON.stringify(dailyMeeting.meetingData?.config),
         status: "CREATED",
-      },
-    });
-
-    // FIXME: one timeslot booked for one pediatrician, block the availability for other pediatricians as well
-    // create appointment
-    const appointment = await prisma.appointment.create({
-      data: {
-        pediatricianId: pediatricianId,
-        childId: child,
-        parentId: session.id,
-        appointmentDate: date!,
-        timeslot: timeSlot,
-        meetingId: meeting.id,
-        additionalNotes: notes,
-        status: "SCHEDULED",
       },
     });
 
