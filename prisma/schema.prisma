@@ -30,8 +30,15 @@ enum AppointmentStatus {
   SCHEDULED
   ONGOING
   COMPLETED
-  CANCELED
+  CANCELLED
   RESCHEDULED
+}
+
+enum MeetingStatus {
+  CREATED
+  COMPLETED
+  CANCELLED
+  EXPIRED
 }
 
 enum PaymentMethod {
@@ -169,11 +176,11 @@ model HealthRecord {
 }
 
 model Pediatrician {
-  pediatricianId  String        @id @default(cuid())
-  userId          String        @unique
-  qualifications  String?       @db.LongText
+  pediatricianId  String         @id @default(cuid())
+  userId          String         @unique
+  qualifications  String?        @db.LongText
   specializations String?
-  description     String?       @db.LongText
+  description     String?        @db.LongText
   availability    Availability[]
   assistant       Assistant[]
   appointment     Appointment[]
@@ -255,10 +262,13 @@ model Appointment {
   additionalNotes String?
   status          AppointmentStatus @default(SCHEDULED)
   payment         Payment?
+  meeting         DailyMeeting?
 
   pediatrician Pediatrician @relation(fields: [pediatricianId], references: [pediatricianId])
   child        Child        @relation(fields: [childId], references: [id])
   parent       User         @relation(fields: [parentId], references: [id])
+
+  @@unique([pediatricianId, appointmentDate, timeslot])
 }
 
 model Payment {
@@ -294,4 +304,21 @@ model SubscriptionPlan {
   duration    String
 
   subscription Subscription?
+}
+
+model DailyMeeting {
+  id            String        @id
+  appointmentId String        @unique
+  name          String
+  startTime     DateTime
+  endTime       DateTime
+  privacy       String
+  url           String
+  createdAt     DateTime
+  config        Json
+  status        MeetingStatus @default(CREATED)
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id])
+
+  @@unique([id, appointmentId])
 }

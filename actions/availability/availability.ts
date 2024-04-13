@@ -82,3 +82,37 @@ export const getAllAvailabilitiesByPediatrician = async () => {
         return { error: "Error occurred when retrieving data!" };
     }
 }
+
+/**
+ * Delete availability by id
+ * @param id number
+ * @returns string
+ */
+export const deleteAvailability = async (id: number) => {
+    const session = await currentUser();
+    if (!session || !session.id) {
+      return { error: "User id not found!" };
+    }
+    if (!id) {
+      return { error: "Availability id not found!" };
+    }
+    // get pediatrician details
+    const pediatrician = await getPediatricianDetailsByUserId(session.id)
+    if (!pediatrician.pediatrician) {
+        return { error: "current user is not a pediatrician!" };
+    }
+
+    try {
+      await prisma.availability.delete({
+        where: {
+          id: id,
+          pediatricianId: pediatrician.pediatrician.pediatricianId,
+        },
+      });
+  
+      return { success: "Availability deleted successfully!" };
+    } catch (error) {
+      console.log(error);
+      return { error: "Error occurred when deleting availability!" };
+    }
+  };

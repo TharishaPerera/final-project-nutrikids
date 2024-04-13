@@ -19,7 +19,7 @@ import { ArrowBigDown, ArrowBigUp, Bookmark } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 const PostPage = () => {
@@ -69,17 +69,17 @@ const PostPage = () => {
   };
 
   const savePost = () => {
-      SaveUnsavePost(postId)
-        .then((response) => {
-          response?.error && toast.error(response.error);
-          response?.success && toast.success(response.success);
+    SaveUnsavePost(postId)
+      .then((response) => {
+        response?.error && toast.error(response.error);
+        response?.success && toast.success(response.success);
 
-          setIsSaved(response.success ? !isSaved : isSaved);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Something went wrong. Please try again later!");
-        });
+        setIsSaved(response.success ? !isSaved : isSaved);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Something went wrong. Please try again later!");
+      });
   };
 
   const handleDataUpdate = (data: PostInterface) => {
@@ -132,18 +132,27 @@ const PostPage = () => {
           </ToolTip>
         </div>
       </div>
-      <div>
-        <div className="text-md">{data.content}</div>
-        {/* <div className="w-full">
+      {data.media && (
+        <div className="w-full">
           <AspectRatio ratio={21 / 9}>
             <Image
-              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"
+              src={data.media}
               alt="Image"
               fill={true}
               className="rounded-md object-cover"
             />
           </AspectRatio>
-        </div> */}
+        </div>
+      )}
+      <div>
+        <div className="text-md">
+          {data?.content!.split("\n").map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              {index !== data.content!.split("\n").length - 1 && <br />}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
       <div className="border rounded-lg p-2 flex justify-between items-center">
         <div className="flex space-x-2">

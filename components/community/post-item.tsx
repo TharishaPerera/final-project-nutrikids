@@ -52,7 +52,7 @@ export const PostItem: React.FC<PostItemProps> = ({
       <Link href={`/community/posts/${postId}`} className="w-full">
         <div className="border rounded-lg p-4 bg-secondary space-y-2">
           <h2 className="truncate font-medium text-md sm:text-lg">{title}</h2>
-          <div className="line-clamp-2 text-xs sm:text-sm">{content}</div>
+          <div className="line-clamp-1 text-xs sm:text-sm">{content}</div>
         </div>
       </Link>
       {actions && (
@@ -74,8 +74,7 @@ export const PostItem: React.FC<PostItemProps> = ({
           >
             <Button
               size="icon"
-              variant="secondary"
-              className="bg-red-300 dark:bg-red-800 text-secondary-foreground hover:bg-red-500 dark:hover:bg-red-500"
+              variant="destructive"
             >
               <Trash className="h-4 w-4" />
             </Button>

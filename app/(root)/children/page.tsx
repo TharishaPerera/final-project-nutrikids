@@ -48,7 +48,7 @@ const ChildrenPage = () => {
           form={<ChildrenForm />}
         >
           <Button variant="default" size="sm">
-            Add New Child
+            New Child
           </Button>
         </FormDialog>
       </div>

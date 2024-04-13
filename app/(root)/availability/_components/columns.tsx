@@ -5,6 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit, ArrowUpDown, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Availability } from "@prisma/client";
+import { DeleteDialog } from "@/components/common/delete-dialog";
+import { deleteAvailability } from "@/actions/availability/availability";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<Availability>[] = [
   {
@@ -62,7 +65,23 @@ export const columns: ColumnDef<Availability>[] = [
     cell: ({ row }) => {
       const availability = row.original;
       const handleDelete = () => {
-        // TODO:
+        deleteAvailability(availability.id)
+          .then((response) => {
+            if (response.error) {
+              toast.error(response.error);
+            } else {
+              toast.success(response.success);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error(error);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000)
+          });
       };
 
       const handleEdit = () => {
@@ -79,14 +98,16 @@ export const columns: ColumnDef<Availability>[] = [
           >
             <Edit className="w-4 h-4" />
           </Button>
-          <Button
-            onClick={handleDelete}
-            size="icon"
-            variant="secondary"
-            className="rounded-full"
+          <DeleteDialog
+            title="Delete you availability"
+            onConfirm={handleDelete}
+            description="Are you sure you want to delete your availability record?"
+            variant="destructive"
           >
-            <Trash className="w-4 h-4" />
-          </Button>
+            <Button size="icon" variant="destructive" className="rounded-full">
+              <Trash className="w-4 h-4" />
+            </Button>
+          </DeleteDialog>
         </div>
       );
     },
