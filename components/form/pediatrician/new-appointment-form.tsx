@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { convertToLKTime } from "@/lib/appointment-utils";
 import { AppointmentSchema } from "@/schemas/appointment-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Child } from "@prisma/client";
@@ -43,8 +44,9 @@ export const NewAppointmentForm = () => {
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
+  const today = new Date();
 
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(new Date(convertToLKTime(today.toString())));
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
   const [children, setChildren] = useState<Child[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -79,7 +81,7 @@ export const NewAppointmentForm = () => {
       toast.info("Please select a date to get time slots!");
     } else {
       startTransition(() => {
-        getTimeSlotsByDay(date, pediatricianId)
+        getTimeSlotsByDay(new Date(convertToLKTime(date.toString())), pediatricianId)
           .then((response) => {
             if (response.error) {
               toast.error(response.error);
