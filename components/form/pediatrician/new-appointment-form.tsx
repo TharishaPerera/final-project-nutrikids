@@ -43,6 +43,8 @@ export const NewAppointmentForm = () => {
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
+  const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(currentTimeZone);
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
