@@ -15,7 +15,7 @@ export const Stats = () => {
               <CardContent className="flex flex-col md:flex-row p-2 gap-2 w-full">
                 <Card className="w-full hover:bg-secondary">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                    <CardTitle className="text-sm font-medium">Appointments</CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
@@ -27,7 +27,7 @@ export const Stats = () => {
                 </Card>
                 <Card className="w-full hover:bg-secondary">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                    <CardTitle className="text-sm font-medium">Community Posts</CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
@@ -39,7 +39,7 @@ export const Stats = () => {
                 </Card>
                 <Card className="w-full hover:bg-secondary">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-4 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                    <CardTitle className="text-sm font-medium">Community Interactions</CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
