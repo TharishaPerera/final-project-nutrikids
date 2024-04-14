@@ -23,6 +23,14 @@ jobs:
       NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
       SMTP_EMAIL: ${{ secrets.SMTP_EMAIL }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      AUTH_TRUST_HOST: ${{ secrets.AUTH_TRUST_HOST }}
+      DAILY_API_KEY: ${{ secrets.DAILY_API_KEY }}
+      DAILY_API_URL: ${{ secrets.DAILY_API_URL }}
+      DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
+      EDGE_STORE_ACCESS_KEY: ${{ secrets.EDGE_STORE_ACCESS_KEY }}
+      EDGE_STORE_SECRET_KEY: ${{ secrets.EDGE_STORE_SECRET_KEY }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -40,9 +48,18 @@ jobs:
         echo RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} >> .env
         echo NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }} >> .env
         echo SMTP_EMAIL=${{ secrets.SMTP_EMAIL }} >> .env
-        echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
+        echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env  
+        echo AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }} >> .env
+        echo DAILY_API_KEY=${{ secrets.DAILY_API_KEY }} >> .env
+        echo DAILY_API_URL=${{ secrets.DAILY_API_URL }} >> .env
+        echo DEFAULT_USER_PASSWORD=${{ secrets.DEFAULT_USER_PASSWORD }} >> .env
+        echo EDGE_STORE_ACCESS_KEY=${{ secrets.EDGE_STORE_ACCESS_KEY }} >> .env
+        echo EDGE_STORE_SECRET_KEY=${{ secrets.EDGE_STORE_SECRET_KEY }} >> .env
+        echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+
     - run: npm ci
     - run: npm run build --if-present
     - name: Change Directory
       run: cd /home/tharisha/projects/project.tharishaperera.com.lk/actions-runner/_work/final-project-nutrikids/final-project-nutrikids
-    - run: pm2 restart 2
+    - run: pm2 restart 0
+    
