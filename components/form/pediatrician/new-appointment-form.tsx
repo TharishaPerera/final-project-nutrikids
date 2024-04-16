@@ -141,6 +141,7 @@ export const NewAppointmentForm = () => {
               mode="single"
               selected={date}
               onSelect={(date) => {
+                console.log(date);
                 getTimeSlots(date);
                 setDate(date);
               }}
