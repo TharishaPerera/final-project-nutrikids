@@ -170,6 +170,9 @@ export const getTimeSlotsByDay = async (date: Date, pediatricianId: string) => {
       return { error: "Please select a date to get time slots!" };
     }
 
+    console.log(getFullDay(date.getDay())?.toLowerCase(),)
+    console.log(date.getDay())
+
     const startEndTimes = await prisma.availability.findMany({
       select: {
         startTime: true,

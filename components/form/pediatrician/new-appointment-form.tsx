@@ -43,9 +43,6 @@ export const NewAppointmentForm = () => {
   const pathname = usePathname();
   var parts = pathname.split("/");
   var pediatricianId = parts[parts.length - 1];
-  const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  console.log(currentTimeZone);
-  console.log(new Date())
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
@@ -141,9 +138,8 @@ export const NewAppointmentForm = () => {
               mode="single"
               selected={date}
               onSelect={(date) => {
-                console.log(date);
-                getTimeSlots(date);
                 setDate(date);
+                getTimeSlots(date);
               }}
               disabled={(date) =>
                 date < new Date(new Date().setDate(new Date().getDate() - 1))
