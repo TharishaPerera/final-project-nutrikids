@@ -30,6 +30,8 @@ jobs:
       EDGE_STORE_ACCESS_KEY: ${{ secrets.EDGE_STORE_ACCESS_KEY }}
       EDGE_STORE_SECRET_KEY: ${{ secrets.EDGE_STORE_SECRET_KEY }}
       NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      TIMESLOT_DURATION: ${{ secrets.TIMESLOT_DURATION }}
+      TZ: ${{ secrets.TZ }}
 
     steps:
     - uses: actions/checkout@v3
@@ -56,6 +58,8 @@ jobs:
         echo EDGE_STORE_ACCESS_KEY=${{ secrets.EDGE_STORE_ACCESS_KEY }} >> .env
         echo EDGE_STORE_SECRET_KEY=${{ secrets.EDGE_STORE_SECRET_KEY }} >> .env
         echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env
+        echo TIMESLOT_DURATION=${{ secrets.TIMESLOT_DURATION }} >> .env
+        echo TZ=${{ secrets.TZ }} >> .env
 
     - run: npm ci
     - run: npm run build --if-present
