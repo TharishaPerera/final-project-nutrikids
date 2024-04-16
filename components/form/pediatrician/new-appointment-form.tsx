@@ -45,6 +45,7 @@ export const NewAppointmentForm = () => {
   var pediatricianId = parts[parts.length - 1];
   const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   console.log(currentTimeZone);
+  console.log(new Date())
 
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [timeslots, setTimeslots] = useState<TimeSlotInterface[]>([]);
