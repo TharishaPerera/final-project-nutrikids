@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useSession } from "next-auth/react";
 
 import { ApplicationName, TopNavLinks } from "@/config/navlinks.config";
@@ -21,7 +21,7 @@ export const MobileMenu = () => {
         <div className="flex items-center justify-between px-2">
           <Link href="/" className="flex items-center space-x-2">
             <span className="uppercase font-semibold text-gray-700 dark:text-gray-200 tracking-widest">
-            <span>{ApplicationName}</span>
+              <span>{ApplicationName}</span>
             </span>
           </Link>
           <div>

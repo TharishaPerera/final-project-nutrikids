@@ -3,10 +3,16 @@
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CopyIcon, Edit, MoreHorizontal, ArrowUpDown, Trash } from "lucide-react";
+import {
+  CopyIcon,
+  Edit,
+  MoreHorizontal,
+  ArrowUpDown,
+  Trash,
+} from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { toast } from "sonner";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import { UserTableInterface } from "@/interfaces/user-interfaces/user-interfaces";
 

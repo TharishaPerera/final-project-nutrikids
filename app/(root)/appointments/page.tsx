@@ -7,7 +7,7 @@ import { PageTitle } from "@/components/common/page-title";
 import { buttonVariants } from "@/components/ui/button";
 import { MyAppointmentsInterface } from "@/interfaces/appointment-interfaces/appointment-interfaces";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import React, { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { columns } from "./_components/columns";

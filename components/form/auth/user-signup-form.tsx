@@ -5,7 +5,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
@@ -80,7 +80,12 @@ export const UserSignupForm = () => {
     } = values;
 
     if (userType == "parent") {
-      if ((!noOfChildren || noOfChildren == "") || (!youngestAge || youngestAge == "")) {
+      if (
+        !noOfChildren ||
+        noOfChildren == "" ||
+        !youngestAge ||
+        youngestAge == ""
+      ) {
         setIsLoading(false);
         return toast.error(
           "To register on this platform, you must have at least one child who is under 16 years old!"
@@ -105,7 +110,7 @@ export const UserSignupForm = () => {
         data.success && toast.success(data.success);
       })
       .finally(() => {
-        form.reset()
+        form.reset();
         setIsLoading(false);
       });
   };

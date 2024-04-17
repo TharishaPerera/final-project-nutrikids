@@ -7,7 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn, dateFormat } from "@/lib/utils";
 import { MyAppointmentsInterface } from "@/interfaces/appointment-interfaces/appointment-interfaces";
 import { formatUnixTimestampRange } from "@/lib/appointment-utils";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { DeleteDialog } from "@/components/common/delete-dialog";
 import { deleteMeeting } from "@/actions/appointment/daily.co/meeting";
 import { toast } from "sonner";

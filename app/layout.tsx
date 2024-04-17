@@ -7,6 +7,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { auth } from "@/auth";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { ViewTransitions } from "next-view-transitions";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -31,19 +32,21 @@ export default async function RootLayout({
   console.log(session);
   return (
     <SessionProvider session={session}>
-      <html lang="en">
-        <body className={poppins.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster position="bottom-right" />
-            <EdgeStoreProvider>{children}</EdgeStoreProvider>
-          </ThemeProvider>
-        </body>
-      </html>
+      <ViewTransitions>
+        <html lang="en">
+          <body className={poppins.className}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster position="bottom-right" />
+              <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            </ThemeProvider>
+          </body>
+        </html>
+      </ViewTransitions>
     </SessionProvider>
   );
 }

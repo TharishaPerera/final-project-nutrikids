@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Loader } from "@/components/common/loader";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { PageTitle } from "@/components/common/page-title";
 import { UserTableInterface } from "@/interfaces/user-interfaces/user-interfaces";
 import { FormDialog } from "@/components/common/form-dialog";
@@ -55,7 +55,12 @@ const UsersPage = () => {
         </FormDialog>
         {/* <Link href="/users/create" className={cn(buttonVariants({ variant: "default", size: "sm" }))}>New User</Link> */}
       </div>
-      <DataTable data={data} columns={columns} searchPlaceholder="Search Names..." searchKey="name" />
+      <DataTable
+        data={data}
+        columns={columns}
+        searchPlaceholder="Search Names..."
+        searchKey="name"
+      />
     </div>
   );
 };

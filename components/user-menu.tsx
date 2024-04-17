@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { signOut, useSession } from "next-auth/react";
 import { LogOut, Settings, User2 } from "lucide-react";
 
@@ -51,7 +51,7 @@ export const UserMenu = () => {
           <DropdownMenuGroup>
             <Link href="/profile">
               <DropdownMenuItem>
-                <User2 className="w-4 h-4 mr-2"/>
+                <User2 className="w-4 h-4 mr-2" />
                 <span>Profile</span>
               </DropdownMenuItem>
             </Link>
@@ -63,14 +63,18 @@ export const UserMenu = () => {
             </Link> */}
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <span>Theme</span>
-              <DropdownMenuShortcut><ModeToggle /></DropdownMenuShortcut>
-            </DropdownMenuItem>
+          <DropdownMenuItem>
+            <span>Theme</span>
+            <DropdownMenuShortcut>
+              <ModeToggle />
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => logout()}>
             <span>Sign out</span>
-            <DropdownMenuShortcut><LogOut className="w-4 h-4 mr-2" /></DropdownMenuShortcut>
+            <DropdownMenuShortcut>
+              <LogOut className="w-4 h-4 mr-2" />
+            </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Edit, Trash } from "lucide-react";
 import { DeleteDialog } from "@/components/common/delete-dialog";
@@ -72,10 +72,7 @@ export const PostItem: React.FC<PostItemProps> = ({
             description="Are you sure you want to delete this post?"
             variant="destructive"
           >
-            <Button
-              size="icon"
-              variant="destructive"
-            >
+            <Button size="icon" variant="destructive">
               <Trash className="h-4 w-4" />
             </Button>
           </DeleteDialog>
