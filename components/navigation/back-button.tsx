@@ -1,19 +1,19 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
 interface BackButtonProps {
-    href?: string
-    topLeft?: boolean
+  href?: string;
+  topLeft?: boolean;
 }
 
 export const BackButton: React.FC<BackButtonProps> = ({ href, topLeft }) => {
   return (
     <>
       <Link
-        href={href ?? '/'}
+        href={href ?? "/"}
         className={cn(
           buttonVariants({ variant: "ghost" }),
           topLeft && "absolute left-4 top-4 md:left-8 md:top-8"

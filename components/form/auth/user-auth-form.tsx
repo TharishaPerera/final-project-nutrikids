@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as z from "zod";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";

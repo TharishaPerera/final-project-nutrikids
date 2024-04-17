@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

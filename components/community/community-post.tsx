@@ -2,7 +2,7 @@ import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { dateFormat } from "@/lib/utils";
 
 interface CommunityPostProps {
@@ -46,7 +46,9 @@ export const CommunityPost: React.FC<CommunityPostProps> = ({
         <Separator />
         <div>
           <h1 className="text-md md:text-lg font-medium">{title}</h1>
-          <div className="text-sm md:text-md font-normal line-clamp-4">{content}</div>
+          <div className="text-sm md:text-md font-normal line-clamp-4">
+            {content}
+          </div>
         </div>
         <Separator />
         <div className="flex justify-between">

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { cn, getFirstLetters } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -25,7 +25,9 @@ export const ProfileSection = () => {
         </Avatar>
       </div>
       <div>
-        <span className="text-lg tracking-wider font-medium flex text-center">{name}</span>
+        <span className="text-lg tracking-wider font-medium flex text-center">
+          {name}
+        </span>
       </div>
       <div className="space-y-2 w-full">
         <Link

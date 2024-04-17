@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 
@@ -10,10 +10,17 @@ import { cn } from "@/lib/utils";
 import { UserMenu } from "@/components/user-menu";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme/theme-toggler";
-import { ApplicationName, TopNavLinks, showDashboardBtnLinks } from "@/config/navlinks.config";
+import {
+  ApplicationName,
+  TopNavLinks,
+  showDashboardBtnLinks,
+} from "@/config/navlinks.config";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
 
-export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+export const Navbar = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLElement>) => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
@@ -53,20 +60,29 @@ export const Navbar = ({ className, ...props }: React.HTMLAttributes<HTMLElement
         </div>
         <div className="space-x-4 hidden md:flex">
           {TopNavLinks.map((link) => (
-            <Link key={link.href} href={link.href} className={cn("text-md", pathname.includes(link.href) && "underline underline-offset-8")}>
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                "text-md",
+                pathname.includes(link.href) && "underline underline-offset-8"
+              )}
+            >
               {link.label}
             </Link>
           ))}
         </div>
         <div className="flex items-center justify-end space-x-6">
-          {session && (showDashboardBtnLinks.includes(pathname) || pathname.includes("/community/posts")) && (
-            <Link
-              href="/dashboard"
-              className="hidden md:block text-sm md:text-md"
-            >
-              <Button variant="secondary">Dashboard</Button>
-            </Link>
-          )}
+          {session &&
+            (showDashboardBtnLinks.includes(pathname) ||
+              pathname.includes("/community/posts")) && (
+              <Link
+                href="/dashboard"
+                className="hidden md:block text-sm md:text-md"
+              >
+                <Button variant="secondary">Dashboard</Button>
+              </Link>
+            )}
 
           {session ? (
             <UserMenu />
