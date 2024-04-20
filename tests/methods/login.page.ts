@@ -1,5 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { APPLICATION_URL, PASSWORD, USERNAME } from "../tests.config";
+import TestData from '../testdata.json';
+
+const { applicationURL, login } = TestData;
 
 export class LoginPage {
   readonly page: Page;
@@ -24,7 +26,7 @@ export class LoginPage {
   }
 
   async navigateToURL() {
-    await this.page.goto(APPLICATION_URL);
+    await this.page.goto(applicationURL);
     await expect(this.lbl_PageHeaderWelcome).toHaveText("Welcome to NutriKids");
   }
 
@@ -34,8 +36,8 @@ export class LoginPage {
   }
 
   async login() {
-    await this.txt_Email.fill(USERNAME);
-    await this.txt_Password.fill(PASSWORD);
+    await this.txt_Email.fill(login.parent.email);
+    await this.txt_Password.fill(login.parent.password);
     await this.btn_Signin.click();
 
     // verify login to the dashboard

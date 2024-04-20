@@ -1,5 +1,11 @@
 {
-  "login": {},
+  "applicationURL": "https://project.tharishaperera.com.lk",
+  "login": {
+    "parent" : {
+      "email": "parent@nutrikids.com",
+      "password": "1qaz@WSX"
+    }
+  },
   "register": {
     "parent": {
       "name": "Playwright Parent",

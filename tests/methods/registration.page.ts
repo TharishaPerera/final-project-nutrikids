@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { APPLICATION_URL } from "../tests.config";
-import testdata from '../testdata.json';
-import * as fs from "fs";
+import TestData from '../testdata.json';
+
+const { applicationURL, register } = TestData;
 
 export const generateUniqueEmail = (email: string) => {
     return email.replace('test', Date.now().toString());
@@ -42,29 +42,29 @@ export class RegistrationPage {
   }
 
   async navigateToURL() {
-    await this.page.goto(APPLICATION_URL + "/auth/sign-up");
+    await this.page.goto(applicationURL + "/auth/sign-up");
     await expect(this.lbl_SignUpPageHeader).toHaveText("Sign Up");
   }
 
   async registerAsParent() {
-    await this.txt_Name.fill(testdata.register.parent.name);
-    await this.txt_Email.fill(generateUniqueEmail(testdata.register.parent.email));
-    await this.txt_Password.fill(testdata.register.parent.password);
-    await this.txt_PasswordConfirmation.fill(testdata.register.parent.password);
-    await this.ele_ddRole.selectOption({ value: testdata.register.parent.role });
-    await this.txt_NoOfChildren.fill(testdata.register.parent.noOfChildren);
-    await this.txt_YoungestAge.fill(testdata.register.parent.youngestAge);
+    await this.txt_Name.fill(register.parent.name);
+    await this.txt_Email.fill(generateUniqueEmail(register.parent.email));
+    await this.txt_Password.fill(register.parent.password);
+    await this.txt_PasswordConfirmation.fill(register.parent.password);
+    await this.ele_ddRole.selectOption({ value: register.parent.role });
+    await this.txt_NoOfChildren.fill(register.parent.noOfChildren);
+    await this.txt_YoungestAge.fill(register.parent.youngestAge);
     await this.btn_Signup.click();
 
     await expect(this.lbl_Confirmation).toHaveText("Confirmation email sent!");
   }
 
   async registerAsConsultant() {
-    await this.txt_Name.fill(testdata.register.consultant.name);
-    await this.txt_Email.fill(generateUniqueEmail(testdata.register.consultant.email));
-    await this.txt_Password.fill(testdata.register.consultant.password);
-    await this.txt_PasswordConfirmation.fill(testdata.register.consultant.password);
-    await this.ele_ddRole.selectOption({ value: testdata.register.consultant.role });
+    await this.txt_Name.fill(register.consultant.name);
+    await this.txt_Email.fill(generateUniqueEmail(register.consultant.email));
+    await this.txt_Password.fill(register.consultant.password);
+    await this.txt_PasswordConfirmation.fill(register.consultant.password);
+    await this.ele_ddRole.selectOption({ value: register.consultant.role });
     await this.btn_Signup.click();
 
     await expect(this.lbl_Confirmation).toHaveText("Confirmation email sent!");
