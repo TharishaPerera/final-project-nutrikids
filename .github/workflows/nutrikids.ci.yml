@@ -64,7 +64,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Install Playwright
-      run: npx playwright install
+      run: npx playwright install --with-deps
     - name: Run Playwright Tests
       run: npm test
     - name: Change Directory
