@@ -82,7 +82,7 @@ export const ConsultantForm = ({
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        rows={6}
+                        rows={8}
                         placeholder="Tell us a little bit about yourself"
                         className="resize-none"
                         {...field}
@@ -101,7 +101,7 @@ export const ConsultantForm = ({
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        rows={6}
+                        rows={10}
                         placeholder="List your qualifications"
                         className="resize-none"
                         {...field}

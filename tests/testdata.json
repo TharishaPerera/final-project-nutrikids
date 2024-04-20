@@ -1,0 +1,25 @@
+{
+  "applicationURL": "https://project.tharishaperera.com.lk",
+  "login": {
+    "parent" : {
+      "email": "parent@nutrikids.com",
+      "password": "1qaz@WSX"
+    }
+  },
+  "register": {
+    "parent": {
+      "name": "Playwright Parent",
+      "email": "parent.test@playwright.com",
+      "password": "1qaz@WSX",
+      "role": "parent",
+      "noOfChildren": "2",
+      "youngestAge": "5"
+    },
+    "consultant": {
+      "name": "Playwright Consultant",
+      "email": "consultant.test@playwright.com",
+      "password": "1qaz@WSX",
+      "role": "consultant"
+    }
+  }
+}
