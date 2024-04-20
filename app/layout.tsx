@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Poppins } from "next/font/google";
+import { Montserrat, Poppins, Lexend_Deca } from "next/font/google";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
 
@@ -17,6 +17,10 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
+const lexend = Lexend_Deca({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+})
 
 export const metadata: Metadata = {
   title: "N U T R I K I D S",
@@ -34,7 +38,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <ViewTransitions>
         <html lang="en">
-          <body className={poppins.className}>
+          <body className={lexend.className}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
