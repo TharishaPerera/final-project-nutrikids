@@ -17,12 +17,15 @@ export const Footer = () => {
             <span>{ApplicationName}</span>
           </span>{" "}
           - All right reserved by{" "}
-          <Link href={socialLinks.portfolio} legacyBehavior>
-            <a target="_blank" className="underline underline-offset-2">
-              {" "}
-              Tharisha Perera.
-            </a>
-          </Link>
+          <a
+            href={socialLinks.portfolio}
+            className="underline underline-offset-2"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            {" "}
+            Tharisha Perera.
+          </a>
         </p>
       </aside>
     </footer>
