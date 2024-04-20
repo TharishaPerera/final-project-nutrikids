@@ -1,0 +1,19 @@
+{
+  "login": {},
+  "register": {
+    "parent": {
+      "name": "Playwright Parent",
+      "email": "parent.test@playwright.com",
+      "password": "1qaz@WSX",
+      "role": "parent",
+      "noOfChildren": "2",
+      "youngestAge": "5"
+    },
+    "consultant": {
+      "name": "Playwright Consultant",
+      "email": "consultant.test@playwright.com",
+      "password": "1qaz@WSX",
+      "role": "consultant"
+    }
+  }
+}
