@@ -123,7 +123,7 @@ export const NewAppointmentForm = () => {
   };
 
   if (isPending) {
-    return <Loader />;
+    return <Loader height="sm" />;
   }
 
   return (
