@@ -38,7 +38,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <ViewTransitions>
         <html lang="en">
-          <body className={lexend.className}>
+          <body className={poppins.className}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
