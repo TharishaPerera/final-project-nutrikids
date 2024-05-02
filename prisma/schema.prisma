@@ -78,6 +78,7 @@ model User {
   subscriptionId        String?
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+  message               Message[]
 
   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
   userRole     UserRole      @relation(fields: [role], references: [id])
@@ -322,4 +323,13 @@ model DailyMeeting {
   appointment Appointment @relation(fields: [appointmentId], references: [id])
 
   @@unique([id, appointmentId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  userId    String?
+  message   String
+  createdAt DateTime @default(now())
+
+  User User? @relation(fields: [userId], references: [id])
 }
