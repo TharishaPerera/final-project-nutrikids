@@ -58,7 +58,6 @@ export const deleteMeeting = async (name: string, appointmentId: string) => {
     });
 
     const response = await cancelAppointment(appointmentId)
-    console.log("RESPONSE", response)
 
     return { success: "Meeting deleted successfully!" };
   } catch (error) {
