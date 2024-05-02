@@ -6,8 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ENUMS
@@ -178,9 +179,9 @@ model HealthRecord {
 model Pediatrician {
   pediatricianId  String         @id @default(cuid())
   userId          String         @unique
-  qualifications  String?        @db.LongText
+  qualifications  String?        @db.Text
   specializations String?
-  description     String?        @db.LongText
+  description     String?        @db.Text
   availability    Availability[]
   assistant       Assistant[]
   appointment     Appointment[]
@@ -215,7 +216,7 @@ model Post {
   userId      String
   title       String
   media       String?
-  content     String?     @db.LongText
+  content     String?     @db.Text
   isHelpfull  Int         @default(0)
   notHelpfull Int         @default(0)
   status      PostStatus  @default(NEW)
