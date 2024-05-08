@@ -1,7 +1,7 @@
 import { useTheme } from "next-themes";
 import { HashLoader } from "react-spinners";
 
-import { cardio } from "ldrs";
+// import { cardio } from "ldrs";
 
 interface LoaderProps {
   size?: number;
@@ -16,7 +16,7 @@ export const Loader: React.FC<LoaderProps> = ({
   const bgColor = theme === "light" ? "rgba(255, 255, 255, 0.5)" : "rgba(0, 0, 0, 0.5)";
 
   // cardio loader
-  cardio.register();
+  // cardio.register();
 
   return (
     <>
@@ -41,18 +41,18 @@ export const Loader: React.FC<LoaderProps> = ({
             }}
           >
             <div className="w-full flex justify-center py-10">
-              {/* <HashLoader
+              <HashLoader
                 color={theme === "light" ? "#000" : "#fff"}
                 size={size}
-              /> */}
-              <l-cardio size="50" stroke="4" speed="1.5" color={theme == "light" ? "#000" : "#fff"}></l-cardio>
+              />
+              {/* <l-cardio size="50" stroke="4" speed="1.5" color={theme == "light" ? "#000" : "#fff"}></l-cardio> */}
             </div>
           </div>
         </div>
       ) : (
         <div className="w-full flex justify-center py-10">
-          {/* <HashLoader color={theme == "light" ? "#000" : "#fff"} size={size} /> */}
-          <l-cardio size="50" stroke="4" speed="1.5" color={theme == "light" ? "#000" : "#fff"}></l-cardio>
+          <HashLoader color={theme == "light" ? "#000" : "#fff"} size={size} />
+          {/* <l-cardio size="50" stroke="4" speed="1.5" color={theme == "light" ? "#000" : "#fff"}></l-cardio> */}
         </div>
       )}
     </>
