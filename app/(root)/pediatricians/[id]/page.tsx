@@ -20,9 +20,10 @@ import { OnePediatricianDetailsInterface } from "@/interfaces/user-interfaces/us
 import { Loader } from "@/components/common/loader";
 import { FormDialog } from "@/components/common/form-dialog";
 import { NewAppointmentForm } from "@/components/form/pediatrician/new-appointment-form";
+import Chat from "@/components/chat/chat";
 
 const PediatricianPage = () => {
-  const timeslotDuration = process.env.TIMESLOT_DURATION
+  const timeslotDuration = process.env.TIMESLOT_DURATION;
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -75,11 +76,20 @@ const PediatricianPage = () => {
             </p>
           </div>
           <div className="w-full space-y-3">
-            <Button className="w-full">Chat</Button>
+            <FormDialog
+              title="Start New Chat"
+              description={`Start a new chat with ${data?.user.name}`}
+              form={<Chat />}
+              className="max-w-2xl"
+            >
+              <Button className="w-full">Chat</Button>
+            </FormDialog>
 
             <FormDialog
               title="Book Online Appointment"
-              description={`Please note: an online appointment duration is ${timeslotDuration ?? 20} minutes`}
+              description={`Please note: an online appointment duration is ${
+                timeslotDuration ?? 20
+              } minutes`}
               form={<NewAppointmentForm />}
               className="max-w-2xl"
             >
