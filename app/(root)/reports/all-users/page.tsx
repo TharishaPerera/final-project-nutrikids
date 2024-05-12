@@ -33,6 +33,7 @@ import { toast } from "sonner";
 import { CSVLink } from "react-csv";
 import { Loader } from "@/components/common/loader";
 import { AllUserReportInterface } from "@/interfaces/report-interface/all-user-report";
+import { PageTitle } from "@/components/common/page-title";
 
 const AllUsersReport = () => {
   const [users, setUsers] = React.useState<AllUserReportInterface[]>([]);
@@ -62,6 +63,7 @@ const AllUsersReport = () => {
   }
   return (
     <div className="space-y-6 p-2">
+      <PageTitle title="All Users Report" />
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 justify-between items-center">
         <div className="w-full md:w-2/5 lg:w-1/5">
           <Form {...form}>
