@@ -5,6 +5,7 @@ import { PostInterface } from "@/interfaces/post-interfaces/post-interface";
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { NewPostSchema } from "@/schemas/community-schema";
+import { Post, PostStatus } from "@prisma/client";
 import * as z from "zod";
 
 /**
@@ -66,6 +67,7 @@ export const updatePost = async (values: z.infer<typeof NewPostSchema>) => {
       title: title,
       content: content,
       media: media,
+      status: PostStatus.EDITED,
     },
   });
 
@@ -80,7 +82,7 @@ export const getAllPosts = async () => {
     const allPosts: AllPostsInterface[] = await prisma.post.findMany({
       where: {
         status: {
-          in: ["NEW", "APPROVED", "EDITED"], // TODO: Remove NEW status
+          in: ["APPROVED"],
         },
       },
       orderBy: {
@@ -269,3 +271,68 @@ export const DeletePost = async (id: string) => {
     return { error: "Error occurred when deleting post!" };
   }
 };
+
+/**
+ * Get posts by status
+ * @param status PostStatus
+ * @returns posts
+ */
+export const GetPostsByStatus = async (status: PostStatus[]) => {
+  const session = await currentUser();
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!status) {
+    return { error: "Post status is not Specified!" };
+  }
+
+  try {
+    const posts: Post[] = await prisma.post.findMany({
+      where: {
+        status: {
+          in: status,
+        },
+      }
+    })
+
+    return { posts }
+  } catch (error) {
+    console.log(error)
+    return { error: "Error occurred when retrieving posts!" };
+  }
+}
+
+/**
+ * Update post status
+ * @param postId string
+ * @param status PostStatus
+ * @returns string
+ */
+export const UpdatePostStatus = async (postId: string, status: PostStatus) => {
+  const session = await currentUser();
+  if (!session || !session.id) {
+    return { error: "User id not found!" };
+  }
+  if (!status) {
+    return { error: "Post status is not Specified!" };
+  }
+  if (!postId) {
+    return { error: "Post id is not found!" };
+  }
+
+  try {
+    await prisma.post.update({
+      data: {
+        status: status
+      },
+      where: {
+        id: postId
+      }
+    })
+
+    return { success: "Post status updated successfully!" };
+  } catch (error) {
+    console.log(error)
+    return { error: "Error occurred when retrieving posts!" };
+  }
+}
