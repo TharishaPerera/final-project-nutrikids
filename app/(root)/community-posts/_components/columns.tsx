@@ -72,7 +72,7 @@ export const columns: ColumnDef<Post>[] = [
 
       return (
         <div className="flex items-center space-x-2">
-          {status === PostStatus.NEW || status === PostStatus.EDITED && (
+          {(status === PostStatus.NEW || status === PostStatus.EDITED) && (
             <>
               <Button
                 onClick={handleApprove}
