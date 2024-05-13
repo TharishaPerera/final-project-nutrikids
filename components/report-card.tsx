@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BarChartHorizontalBig } from "lucide-react";
+import Image from "next/image";
 
 interface ReportCardProps {
   name: string;
@@ -26,7 +27,13 @@ export const ReportCard: React.FC<ReportCardProps> = ({
     <Card className="text-center">
       <CardHeader>
         <div className="w-full flex justify-center items-center p-4">
-          <BarChartHorizontalBig className="h-16 w-16" />
+          {/* <BarChartHorizontalBig className="h-16 w-16" /> */}
+          <Image
+            width={75}
+            height={75}
+            src="/assets/report/report-icon.png"
+            alt="logo"
+          />
         </div>
         <p className="font-semibold capitalize">{name}</p>
         <p className="font-normal capitalize text-sm">{description}</p>
