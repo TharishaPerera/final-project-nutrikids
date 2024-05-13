@@ -10,7 +10,8 @@ export class LoginPage {
   readonly lbl_LoginPageHeader: Locator;
   readonly txt_Email: Locator;
   readonly txt_Password: Locator;
-  readonly lnk_dashboard: Locator
+  readonly lnk_dashboard: Locator;
+  readonly lbl_Statistics: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -23,6 +24,7 @@ export class LoginPage {
     this.txt_Email = page.locator('//input[@name="email"]');
     this.txt_Password = page.locator('//input[@name="password"]');
     this.lnk_dashboard = page.locator('//a[text()="Dashboard"]');
+    this.lbl_Statistics = page.locator('//div[text()="Statistics"]');
   }
 
   async navigateToURL() {
@@ -41,6 +43,6 @@ export class LoginPage {
     await this.btn_Signin.click();
 
     // verify login to the dashboard
-    await expect(this.lnk_dashboard).toBeVisible();
+    await expect(this.lbl_Statistics).toBeVisible();
   }
 }
