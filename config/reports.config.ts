@@ -8,9 +8,16 @@ export const Reports = [
   },
   {
     name: "All Appointments Report",
-    description: "Get all previous appointment details!",
+    description: "Get all appointment details!",
     href: "/reports/all-appointments",
-    availableFor: [100, 500, 1000, 5000, 10000],
+    availableFor: [5000, 10000],
+    icon: "",
+  },
+  {
+    name: "My Appointments Report",
+    description: "Get my appointment details!",
+    href: "/reports/my-appointments",
+    availableFor: [100, 500, 1000, 10000],
     icon: "",
   },
 ];
