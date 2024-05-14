@@ -1,6 +1,6 @@
 "use server";
 
-import { MedicalHistoryForParentsInterface } from "@/interfaces/medial-history-interfaces/medical-history-interfaces";
+import { MedicalHistoryForAdminsInterface, MedicalHistoryForParentsInterface } from "@/interfaces/medial-history-interfaces/medical-history-interfaces";
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { MedicalHistorySchema } from "@/schemas/medical-history-schema";
@@ -74,6 +74,50 @@ export const GetMedicalHistoryForParents = async () => {
       },
     });
 
+    return { healthRecords };
+  } catch (error) {
+    console.error(error);
+    return {
+      error:
+        "Something went while retrieving medical history data. Please try again!",
+    };
+  }
+};
+
+/**
+ * Get medical records of children for admins
+ * @returns healthRecords
+ */
+export const GetMedicalHistoryForAdmins = async () => {
+  try {
+    const session = await currentUser();
+    if (!session || !session.id) {
+      redirect("/auth/sign-in");
+    }
+
+    const healthRecords: MedicalHistoryForAdminsInterface[] = await prisma.healthRecord.findMany({
+      select: {
+        additionalNotes: true,
+        documents: true,
+        createdAt: true,
+        child: {
+          select: {
+            name: true,
+            user: {
+              select: {
+                name: true,
+                email: true,
+              }
+            }
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    console.log(healthRecords)
     return { healthRecords };
   } catch (error) {
     console.error(error);
