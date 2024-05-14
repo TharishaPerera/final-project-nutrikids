@@ -57,6 +57,7 @@ export const GetMedicalHistoryForParents = async () => {
       select: {
         additionalNotes: true,
         documents: true,
+        createdAt: true,
         child: {
           select: {
             name: true,

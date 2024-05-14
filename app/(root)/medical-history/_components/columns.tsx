@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { MedicalHistoryForParentsInterface } from "@/interfaces/medial-history-interfaces/medical-history-interfaces";
-import { getDownloadUrl } from "@edgestore/react/utils";
 import { Download } from "lucide-react";
+import { dateFormat } from "@/lib/utils";
 
 export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
   {
@@ -25,11 +25,18 @@ export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
     },
   },
   {
+    accessorKey: "createdAt",
+    header: "Date Added",
+    cell: ({ row }) => {
+      return <span className="capitalize">{dateFormat(row.original.createdAt, "dddd, MMMM D, YYYY")}</span>;
+    },
+  },
+  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
       const files = row.original.documents;
-      let filesArray = [];
+      let filesArray: string[] | never[] = [];
       if (files) {
         filesArray = JSON.parse(files);
       }
