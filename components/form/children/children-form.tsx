@@ -44,19 +44,19 @@ export const ChildrenForm = () => {
   const onSubmit = (values: z.infer<typeof ChildrenFormSchema>) => {
     console.log(values);
     startTransition(() => {
-        addNewChild(values)
-            .then((response) => {
-                response.error && toast.error(response.error);
-                response.success && toast.success(response.success);
-            })
-            .catch((error) => {
-                console.error(error);
-                toast.error("Something went wrong. Please try again later!");
-            })
-            .finally(() => {
-                form.reset();
-                window.location.reload();
-            });
+      addNewChild(values)
+        .then((response) => {
+          response.error && toast.error(response.error);
+          response.success && toast.success(response.success);
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Something went wrong. Please try again later!");
+        })
+        .finally(() => {
+          form.reset();
+          window.location.reload();
+        });
     });
   };
 

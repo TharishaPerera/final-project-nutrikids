@@ -168,8 +168,8 @@ model Child {
 model HealthRecord {
   id              String   @id @default(cuid())
   childId         String
-  documents       String?
-  additionalNotes String?
+  documents       String?  @db.LongText
+  additionalNotes String?  @db.LongText
   createdAt       DateTime @default(now())
 
   child Child @relation(fields: [childId], references: [id], onDelete: Cascade)
