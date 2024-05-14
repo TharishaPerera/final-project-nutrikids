@@ -26,7 +26,7 @@ export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
     accessorKey: "createdAt",
     header: "Date Added",
     cell: ({ row }) => {
-      return <span className="capitalize">{dateFormat(row.original.createdAt, "MMMM D, YYYY")}</span>;
+      return <span className="capitalize">{dateFormat(row.original.createdAt, "D MMMM, YYYY")}</span>;
     },
   },
   {
