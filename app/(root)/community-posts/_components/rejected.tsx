@@ -35,7 +35,7 @@ const RejectedPosts = () => {
   }
   return (
     <div className="px-2 w-full">
-      <DataTable data={posts} columns={columns} searchEnabled={false} />
+      <DataTable data={posts} columns={columns} searchEnabled={false} columnFilterEnable={false} />
     </div>
   );
 }
