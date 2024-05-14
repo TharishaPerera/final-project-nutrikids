@@ -1,5 +1,6 @@
 "use server";
 
+import { MedicalHistoryForParentsInterface } from "@/interfaces/medial-history-interfaces/medical-history-interfaces";
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { MedicalHistorySchema } from "@/schemas/medical-history-schema";
@@ -38,5 +39,43 @@ export const AddNewRecord = async (
   } catch (error) {
     console.error(error);
     return { error: "Something went wrong!" };
+  }
+};
+
+/**
+ * Get medical records of children for parents
+ * @returns healthRecords
+ */
+export const GetMedicalHistoryForParents = async () => {
+  try {
+    const session = await currentUser();
+    if (!session || !session.id) {
+      redirect("/auth/sign-in");
+    }
+
+    const healthRecords: MedicalHistoryForParentsInterface[] = await prisma.healthRecord.findMany({
+      select: {
+        additionalNotes: true,
+        documents: true,
+        child: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      where: {
+        child: {
+          parentId: session.id,
+        },
+      },
+    });
+
+    return { healthRecords };
+  } catch (error) {
+    console.error(error);
+    return {
+      error:
+        "Something went while retrieving medical history data. Please try again!",
+    };
   }
 };
