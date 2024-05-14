@@ -10,8 +10,6 @@ import { dateFormat } from "@/lib/utils";
 export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
   {
     accessorKey: "name",
-    size: 500,
-    minSize:1000,
     header: "Child Name",
     cell: ({ row }) => {
       return <span className="capitalize">{row.original.child.name}</span>;
@@ -28,7 +26,7 @@ export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
     accessorKey: "createdAt",
     header: "Date Added",
     cell: ({ row }) => {
-      return <span className="capitalize">{dateFormat(row.original.createdAt, "dddd, MMMM D, YYYY")}</span>;
+      return <span className="capitalize">{dateFormat(row.original.createdAt, "MMMM D, YYYY")}</span>;
     },
   },
   {
@@ -57,7 +55,7 @@ export const columns: ColumnDef<MedicalHistoryForParentsInterface>[] = [
           <Button
             onClick={handleDownload}
             size="sm"
-            variant="default"
+            variant="secondary"
             className="rounded-md"
           >
             <Download className="w-5 h-5 mr-2"/> Documents

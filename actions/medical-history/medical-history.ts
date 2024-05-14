@@ -69,6 +69,9 @@ export const GetMedicalHistoryForParents = async () => {
           parentId: session.id,
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return { healthRecords };
