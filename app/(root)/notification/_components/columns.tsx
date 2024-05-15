@@ -29,9 +29,9 @@ export const columns: ColumnDef<Notification>[] = [
     cell: ({ row }) => {
       const targetUsers = row.original.targetUsers;
       switch (targetUsers) {
-        case "100":
+        case 100:
           return <span className="capitalize">All Users</span>;
-        case "1000":
+        case 1000:
           return <span className="capitalize">All Consultants</span>;
         default:
           return <span className="capitalize">-</span>;
