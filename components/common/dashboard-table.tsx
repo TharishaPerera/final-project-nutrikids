@@ -83,7 +83,7 @@ export const DashboardTable = () => {
               </TableRow>
             )}
             {activities.map((activity, index) => (
-              <TableRow>
+              <TableRow key={index}>
                 <TableCell className="py-2">
                   <div className="font-medium">{activity.child.name}</div>
                   {activity.parent && (
