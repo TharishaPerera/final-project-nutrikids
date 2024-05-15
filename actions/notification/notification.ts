@@ -29,7 +29,7 @@ export const CreateNewNotification = async (
       data: {
         title: title,
         description: description,
-        targetUsers: targetUsers,
+        targetUsers: parseInt(targetUsers),
       },
     });
 
@@ -50,7 +50,39 @@ export const GetAllNotifications = async () => {
     if (!session || !session.id || session.level < 5000) {
       redirect("/auth/sign-in");
     }
-    const notifications = await prisma.notification.findMany();
+    const notifications = await prisma.notification.findMany({
+      orderBy: {
+        createdAt: "desc",
+      }
+    });
+    return { notifications };
+  } catch (error) {
+    console.log(error);
+    return { error: "Error occurred when retrieving data!" };
+  }
+}
+
+/**
+ * Get my notifications
+ * @returns Notifications
+ */
+export const GetMyNotifications = async () => {
+  try {
+    const session = await currentUser();
+    if (!session || !session.id) {
+      redirect("/auth/sign-in");
+    }
+    const notifications = await prisma.notification.findMany({
+      where: {
+        targetUsers: {
+          lte: session.level
+        }
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 6,
+    });
     return { notifications };
   } catch (error) {
     console.log(error);

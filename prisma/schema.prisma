@@ -327,7 +327,7 @@ model Notification {
   id          Int      @id @default(autoincrement())
   title       String
   description String   @db.LongText
-  targetUsers String
+  targetUsers Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

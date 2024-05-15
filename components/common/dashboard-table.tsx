@@ -68,40 +68,38 @@ export const DashboardTable = () => {
         Upcoming Activities
       </CardHeader>
       <CardContent className="p-2">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Appointment For</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Time Slot</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {activities.length <= 0 && (
+        {activities.length <= 0 && <div className="text-center p-4 text-sm text-muted-foreground">No upcoming activities</div>}
+        {activities.length > 0 && (
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={3} className="py-2 text-muted-foreground">No upcoming activities</TableCell>
+                <TableHead>Appointment For</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Time Slot</TableHead>
               </TableRow>
-            )}
-            {activities.map((activity, index) => (
-              <TableRow key={index}>
-                <TableCell className="py-2">
-                  <div className="font-medium">{activity.child.name}</div>
-                  {activity.parent && (
-                    <div className="hidden text-sm text-muted-foreground md:inline">
-                      {activity.parent.name} - {activity.parent.email}
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell className="py-2">
-                  {dateFormat(activity.appointmentDate, "D MMM, YYYY")}
-                </TableCell>
-                <TableCell className="py-2">
-                  {formatTimeSlot(activity.timeslot)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {activities.map((activity, index) => (
+                <TableRow key={index}>
+                  <TableCell className="py-2">
+                    <div className="font-medium">{activity.child.name}</div>
+                    {activity.parent && (
+                      <div className="hidden text-sm text-muted-foreground md:inline">
+                        {activity.parent.name} - {activity.parent.email}
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell className="py-2">
+                    {dateFormat(activity.appointmentDate, "D MMM, YYYY")}
+                  </TableCell>
+                  <TableCell className="py-2">
+                    {formatTimeSlot(activity.timeslot)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );
