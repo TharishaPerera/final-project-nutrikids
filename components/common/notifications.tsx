@@ -1,9 +1,34 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState, useTransition } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { BellIcon } from "lucide-react";
-import { truncateText } from "@/lib/utils";
+import { NotificationItem } from "./notification-item";
+import { Notification } from "@prisma/client";
+import { toast } from "sonner";
+import { GetMyNotifications } from "@/actions/notification/notification";
 
 export const Notifications = () => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    startTransition(() => {
+      GetMyNotifications()
+        .then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          }
+          if (response.notifications) {
+            setNotifications(response.notifications);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Something went wrong. Please try again!");
+        });
+    });
+  }, []);
+
   return (
     <div className="px-0">
       <div className="px-0">
@@ -14,34 +39,10 @@ export const Notifications = () => {
                 Notifications
               </CardHeader>
               <CardContent className="p-2 gap-2">
-                <div className="flex items-center p-4 rounded-lg hover:bg-secondary">
-                  <div>
-                    <BellIcon className="h-4 w-4" />
-                  </div>
-                  <div className="ml-3 grid gap-1 text-sm">
-                    <p className="font-medium">Everything</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {truncateText(
-                        "Email digest, mentions & all activity. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        50
-                      )}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center p-4 rounded-lg hover:bg-secondary">
-                  <div>
-                    <BellIcon className="h-4 w-4" />
-                  </div>
-                  <div className="ml-3 grid gap-1 text-sm">
-                    <p className="font-medium">Everything</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      {truncateText(
-                        "Email digest, mentions & all activity. lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                        50
-                      )}
-                    </p>
-                  </div>
-                </div>
+                {notifications.length <= 0 && <div className="text-center p-4 text-sm text-muted-foreground">No notifications</div>}
+                {notifications.length > 0 && notifications.map((notification) => (
+                  <NotificationItem key={notification.id} {...notification} />
+                ))}
               </CardContent>
             </Card>
           </div>

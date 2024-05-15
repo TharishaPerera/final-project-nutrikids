@@ -45,7 +45,6 @@ const AllUsersReport = () => {
   });
 
   const onSubmit = (value: any) => {
-    console.log(value);
     startTransition(() => {
       FindUsersByTypeOrAll(value.userType).then((response) => {
         if (response.error) {
