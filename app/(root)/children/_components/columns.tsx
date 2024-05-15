@@ -59,7 +59,6 @@ export const columns: ColumnDef<Child>[] = [
     cell: ({ row }) => {
       const childId = row.original.id;
       const handleDelete = () => {
-        console.log(childId);
         removeChild(childId)
           .then((response) => {
             if (response.error) {

@@ -14,8 +14,6 @@ export const GetMyAppointments = async () => {
     redirect("/auth/sign-in");
   }
 
-  console.log("SESSION", session);
-
   let appointments:
     | ConsultantAppointmentReportInterface[]
     | ParentAppointmentReportInterface[] = [];

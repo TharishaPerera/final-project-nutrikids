@@ -42,7 +42,6 @@ export const ChildrenForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof ChildrenFormSchema>) => {
-    console.log(values);
     startTransition(() => {
       addNewChild(values)
         .then((response) => {

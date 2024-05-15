@@ -65,7 +65,6 @@ export const NewMedicalHistoryForm = () => {
 
   const onSubmit = (values: z.infer<typeof MedicalHistorySchema>) => {
     values.files = urls;
-    console.log("VALUES: ", values);
     startTransition(() => {
       AddNewRecord(values)
         .then((response) => {
