@@ -117,7 +117,6 @@ export const GetMedicalHistoryForAdmins = async () => {
       },
     });
 
-    console.log(healthRecords)
     return { healthRecords };
   } catch (error) {
     console.error(error);

@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AllAppointmentReportInterface } from "@/interfaces/report-interface/all-appointment-report";
-import { cn, dateFormat } from "@/lib/utils";
+import { cn, dateFormat, formatTimeSlot } from "@/lib/utils";
 import React, { useEffect, useState, useTransition } from "react";
 import { CSVLink } from "react-csv";
 import { toast } from "sonner";
@@ -75,7 +75,7 @@ const AllAppointmentsPage = () => {
               <TableCell className="font-medium">
                 {dateFormat(appointment.appointmentDate, "DD MMM, YYYY")}
               </TableCell>
-              <TableCell>{appointment.timeslot ?? "-"}</TableCell>
+              <TableCell>{formatTimeSlot(appointment.timeslot) ?? "-"}</TableCell>
               <TableCell>{appointment.status ?? "-"}</TableCell>
               <TableCell>{appointment.pediatrician.user.name}</TableCell>
               <TableCell>{appointment.child.name}</TableCell>

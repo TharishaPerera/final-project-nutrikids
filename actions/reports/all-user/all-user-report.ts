@@ -15,7 +15,6 @@ export const FindUsersByTypeOrAll = async (userType: string = "ALL") => {
 
     let users: AllUserReportInterface[] = [];
     if (userType === "ALL") {
-      console.log("All")
       users = await prisma.user.findMany({
         select: {
           name: true,

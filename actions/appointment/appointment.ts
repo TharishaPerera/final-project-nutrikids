@@ -142,7 +142,6 @@ export const getMyAppointments = async () => {
       },
     });
 
-    console.log(appointments);
     return { appointments };
   } catch (error) {
     console.log(error);
@@ -157,7 +156,6 @@ export const getMyAppointments = async () => {
  */
 export const cancelAppointment = async (id: string) => {
   try {
-    console.log("CANCEL APPOINTMENT", id);
     await prisma.appointment.update({
       where: {
         id: id,
