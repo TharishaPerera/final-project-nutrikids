@@ -52,6 +52,11 @@ enum SubscriptionStatus {
   EXPIRED
 }
 
+enum NotificationType {
+  IN_APP
+  EMAIL
+}
+
 // MODELS
 model User {
   id                    String                 @id @default(cuid())
@@ -324,10 +329,11 @@ model DailyMeeting {
 }
 
 model Notification {
-  id          Int      @id @default(autoincrement())
+  id          Int              @id @default(autoincrement())
   title       String
-  description String   @db.LongText
+  description String           @db.LongText
   targetUsers Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  type        NotificationType @default(IN_APP)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
