@@ -27,6 +27,7 @@ export const NewNotificationForm = () => {
     resolver: zodResolver(NotificationFormSchema),
     defaultValues: {
       targetUsers: "100", // default to all users
+      type: "IN_APP",
     },
   });
 
@@ -91,38 +92,73 @@ export const NewNotificationForm = () => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="targetUsers"
-            render={({ field }) => (
-              <FormItem className="space-y-3">
-                <FormLabel>Notify,</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex flex-col space-y-1"
-                  >
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="100" />
-                      </FormControl>
-                      <FormLabel className="font-normal">All users</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center space-x-3 space-y-0">
-                      <FormControl>
-                        <RadioGroupItem value="1000" />
-                      </FormControl>
-                      <FormLabel className="font-normal">
-                        Only consultants
-                      </FormLabel>
-                    </FormItem>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="flex items-center justify-between">
+            <FormField
+              control={form.control}
+              name="targetUsers"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Notify,</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="100" />
+                        </FormControl>
+                        <FormLabel className="font-normal">All users</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="1000" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          Only consultants
+                        </FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Via,</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-1"
+                    >
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="IN_APP" />
+                        </FormControl>
+                        <FormLabel className="font-normal">
+                          In app notification
+                        </FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center space-x-3 space-y-0">
+                        <FormControl>
+                          <RadioGroupItem value="EMAIL" />
+                        </FormControl>
+                        <FormLabel className="font-normal">Email</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <Button type="submit" className="w-full">
             Create Notification
           </Button>
