@@ -13,4 +13,7 @@ export const NotificationFormSchema = z.object({
   targetUsers: z.enum(["100", "1000"], {
     required_error: "You have to select at least one target user roles",
   }),
+  type: z.enum(["IN_APP", "EMAIL"], {
+    required_error: "Notification type is required!",
+  }),
 });

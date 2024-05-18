@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import nodemailer from "nodemailer";
 import handlebars from "handlebars";
@@ -6,6 +6,7 @@ import { TwoFactorCodeTemplate } from "@/components/email-templates/two-factor-c
 import { ResetPasswordTemplate } from "@/components/email-templates/reset-password";
 import { VerifyEmailTemplate } from "@/components/email-templates/verify-email";
 import { WelcomeEmailTemplate } from "@/components/email-templates/welcome-email";
+import { NotificationEmailTemplate } from "@/components/email-templates/notification-email";
 
 const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
 const domain = process.env.NEXT_PUBLIC_APP_URL;
@@ -113,5 +114,33 @@ export const sendWelcomeEmail = async (email: string) => {
     });
   } catch (error) {
     console.log("Welcome Email: ", error);
+  }
+};
+
+/**
+ * Send notification email
+ */
+export const sendNotificationEmail = async (emailData: {
+  name: string | null;
+  email: string | null;
+  title: string;
+  description: string;
+}) => {
+  // create template
+  const template = handlebars.compile(NotificationEmailTemplate);
+  const body = template({
+    name: emailData.name,
+    content: emailData.description,
+  });
+
+  try {
+    await transport.sendMail({
+      from: SMTP_EMAIL,
+      to: emailData.email!,
+      subject: emailData.title,
+      html: body,
+    });
+  } catch (error) {
+    console.log("Notification Email: ", error);
   }
 };
