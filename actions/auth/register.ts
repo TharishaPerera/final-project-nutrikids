@@ -8,6 +8,7 @@ import { generateVerificationToken } from "@/lib/tokens"
 import { sendVerificationEmail } from "@/lib/smtp"
 import { hashPassword } from "@/lib/encrypt"
 import { getRandomUserImage } from "@/lib/images"
+import { chatRegisterUser } from "../pediatrician/chat"
 
 /**
  * User registration 
@@ -47,6 +48,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
             }
         })
     }
+
+    // register in the chat server
+    chatRegisterUser({ username: name, email: email, role: userType.toUpperCase() })
 
     const verificationToken = await generateVerificationToken(email)
 

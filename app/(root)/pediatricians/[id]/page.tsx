@@ -79,7 +79,7 @@ const PediatricianPage = () => {
             <FormDialog
               title="Start New Chat"
               description={`Start a new chat with ${data?.user.name}`}
-              form={<Chat />}
+              form={<Chat pediatrician={data} />}
               className="max-w-2xl"
             >
               <Button className="w-full">Chat</Button>

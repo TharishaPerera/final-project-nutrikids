@@ -7,13 +7,21 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { OnePediatricianDetailsInterface } from "@/interfaces/user-interfaces/user-interfaces";
+import { chatFindCurrentUsersChats, chatFindUserByEmail, chatRegisterUser } from "@/actions/pediatrician/chat";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface MessageInterface {
   role?: string
   message: string
 }
 
-export const Chat = () => {
+interface ChatProps {
+  pediatrician?: OnePediatricianDetailsInterface
+}
+
+export const Chat: React.FC<ChatProps> = ({ pediatrician }) => {
+  const user = useCurrentUser()
   const [messages, setMessages] = React.useState<MessageInterface[]>([
     {
       role: "agent",
@@ -38,6 +46,16 @@ export const Chat = () => {
   ]);
   const [input, setInput] = React.useState("");
   const inputLength = input.trim().length;
+
+  React.useEffect(() => {
+    const receiver = { 
+      username: pediatrician?.user.name,
+      email: pediatrician?.user.email,
+      role: "RECEIVER"
+     }
+    
+     chatFindCurrentUsersChats(receiver)
+  }, [])
 
   return (
     <Card className="">

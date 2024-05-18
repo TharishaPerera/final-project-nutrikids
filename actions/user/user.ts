@@ -10,6 +10,7 @@ import { UserCreateSchema } from "@/schemas/user-schemas";
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { chatRegisterUser } from "../pediatrician/chat";
 
 /**
  * Get all users
@@ -98,6 +99,9 @@ export const createUser = async (values: z.infer<typeof UserCreateSchema>) => {
         },
       });
     }
+
+    // register user in the chat server
+    chatRegisterUser({ username: name, email: email, role: role })
 
     // send welcome email
     if (user.email) {
