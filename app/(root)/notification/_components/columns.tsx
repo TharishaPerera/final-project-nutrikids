@@ -39,6 +39,13 @@ export const columns: ColumnDef<Notification>[] = [
     },
   },
   {
+    accessorKey: "type",
+    header: "Type",
+    cell: ({ row }) => {
+      return <span className="capitalize">{row.original.type}</span>;
+    },
+  },
+  {
     accessorKey: "createdAt",
     header: "Date Created",
     cell: ({ row }) => {
